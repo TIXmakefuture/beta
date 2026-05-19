@@ -21,7 +21,6 @@
             --text-primary: #d1d5db;
             --text-secondary: #6b7280;
             --accent: #60a5fa;
-            --accent-glow: rgba(96, 165, 250, 0.3);
         }
 
         body {
@@ -35,7 +34,6 @@
             position: relative;
         }
 
-        /* 动态光点背景 */
         body::before {
             content: '';
             position: fixed;
@@ -47,17 +45,11 @@
                 radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
             animation: orbFloat 12s ease-in-out infinite alternate;
         }
-
         @keyframes orbFloat {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(4%, -3%);
-            }
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(4%, -3%); }
         }
 
-        /* 扫描线 */
         body::after {
             content: '';
             position: fixed;
@@ -71,7 +63,7 @@
                     rgba(0, 0, 0, 0.03) 4px);
         }
 
-        /* 进入前提示遮罩 */
+        /* 进入提示遮罩 */
         .notice-overlay {
             position: fixed;
             inset: 0;
@@ -83,7 +75,6 @@
             justify-content: center;
             padding: 2rem;
         }
-
         .notice-card {
             max-width: 560px;
             width: 100%;
@@ -96,7 +87,6 @@
             color: #cbd5e1;
             line-height: 1.8;
         }
-
         .notice-title {
             font-size: 1.5rem;
             font-weight: 700;
@@ -106,19 +96,16 @@
             border-left: 4px solid #60a5fa;
             padding-left: 1.2rem;
         }
-
         .notice-text {
             font-size: 0.95rem;
             color: #94a3b8;
             margin-bottom: 2rem;
         }
-
         .notice-text a {
             color: #60a5fa;
             text-decoration: none;
             border-bottom: 1px solid rgba(96, 165, 250, 0.4);
         }
-
         .notice-btn {
             display: inline-block;
             padding: 0.9rem 2.5rem;
@@ -132,19 +119,17 @@
             transition: all 0.25s ease;
             letter-spacing: 0.5px;
         }
-
         .notice-btn:hover {
             background: #60a5fa;
             transform: translateY(-2px);
             box-shadow: 0 12px 32px rgba(96, 165, 250, 0.45);
         }
-
         .notice-btn:active {
             transform: translateY(2px) scale(0.97);
             box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.4);
         }
 
-        /* 水印层 */
+        /* 水印 */
         #watermark {
             position: fixed;
             top: 0;
@@ -155,7 +140,6 @@
             pointer-events: none;
             overflow: hidden;
         }
-
         .watermark-text {
             position: absolute;
             font-size: 18px;
@@ -163,11 +147,10 @@
             white-space: nowrap;
             transform: rotate(-20deg);
             user-select: none;
-            font-weight: 400;
             letter-spacing: 2px;
         }
 
-        /* 玻璃容器 */
+        /* 玻璃效果 */
         .glass {
             background: var(--glass-bg);
             border-radius: 20px;
@@ -190,7 +173,6 @@
             z-index: 999;
             margin-bottom: 2rem;
         }
-
         .logo {
             font-size: 1.6rem;
             font-weight: bold;
@@ -198,7 +180,6 @@
             text-shadow: 0 0 20px rgba(96, 165, 250, 0.5);
             letter-spacing: 1px;
         }
-
         .nav-links a {
             color: #9ca3af;
             text-decoration: none;
@@ -208,7 +189,6 @@
             padding: 0.3rem 0;
             border-bottom: 2px solid transparent;
         }
-
         .nav-links a:hover {
             color: #60a5fa;
             border-bottom: 2px solid #60a5fa;
@@ -224,7 +204,6 @@
             padding: 3rem 2rem;
             margin-bottom: 3rem;
         }
-
         .hero h1 {
             font-size: 4rem;
             margin-bottom: 1.2rem;
@@ -233,20 +212,13 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: none;
             opacity: 0;
             animation: fadeUp 1s ease forwards 0.2s, textShine 3s infinite alternate;
         }
-
         @keyframes textShine {
-            0% {
-                filter: drop-shadow(0 0 6px rgba(96, 165, 250, 0.4));
-            }
-            100% {
-                filter: drop-shadow(0 0 15px rgba(96, 165, 250, 0.8));
-            }
+            0% { filter: drop-shadow(0 0 6px rgba(96, 165, 250, 0.4)); }
+            100% { filter: drop-shadow(0 0 15px rgba(96, 165, 250, 0.8)); }
         }
-
         .hero p {
             font-size: 1.3rem;
             color: #6b7280;
@@ -263,7 +235,6 @@
             opacity: 0;
             animation: fadeUp 1s ease forwards 0.6s;
         }
-
         .btn {
             padding: 1rem 2.4rem;
             border-radius: 14px;
@@ -272,43 +243,35 @@
             font-size: 1.05rem;
             transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            user-select: none;
             letter-spacing: 0.3px;
+            user-select: none;
+            border: none;
         }
-
         .btn-primary {
             background: linear-gradient(135deg, #3b82f6, #60a5fa);
             color: #fff;
             box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
-            border: none;
         }
-
         .btn-primary:hover {
             transform: translateY(-3px);
             box-shadow: 0 14px 32px rgba(59, 130, 246, 0.5);
         }
-
         .btn-primary:active {
             transform: translateY(2px) scale(0.97);
-            box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(59, 130, 246, 0.2);
-            transition: all 0.1s ease;
+            box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: 0.1s;
         }
-
         .btn-secondary {
             background: rgba(255, 255, 255, 0.05);
             color: #60a5fa;
             border: 1px solid rgba(96, 165, 250, 0.3);
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
         }
-
         .btn-secondary:hover {
             background: rgba(96, 165, 250, 0.12);
             transform: translateY(-3px);
             box-shadow: 0 8px 24px rgba(96, 165, 250, 0.2);
         }
-
         .btn-secondary:active {
             transform: translateY(2px) scale(0.97);
             box-shadow: inset 0 6px 16px rgba(0, 0, 0, 0.3);
@@ -322,7 +285,6 @@
             opacity: 0;
             animation: fadeUp 1s ease forwards 0.7s;
         }
-
         .unlock-input {
             width: 100%;
             padding: 14px 18px;
@@ -335,56 +297,42 @@
             margin-bottom: 1rem;
             transition: 0.3s;
         }
-
         .unlock-input:focus {
             border-color: #60a5fa;
             box-shadow: 0 0 16px rgba(96, 165, 250, 0.2);
         }
-
         .unlock-result {
             margin-top: 1rem;
             padding: 1rem;
             border-radius: 14px;
             display: none;
         }
-
-        .success-text {
-            color: #60a5fa;
-        }
-        .error-text {
-            color: #ef4444;
-        }
+        .success-text { color: #60a5fa; }
+        .error-text { color: #ef4444; }
 
         .common-box {
             margin: 0 8% 1.8rem;
             padding: 2rem;
             position: relative;
         }
-
         .common-box h3 {
             color: #6b7280;
             font-size: 1.2rem;
             margin-bottom: 1rem;
             text-align: center;
         }
-
         .common-list-wrap {
             max-height: 220px;
             overflow-y: auto;
             padding-right: 0.5rem;
         }
-
         .common-line {
             padding: 0.9rem 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             color: #d1d5db;
         }
-
-        .common-line span {
-            color: #60a5fa;
-            font-weight: 600;
-        }
-
+        .common-line:last-child { border-bottom: none; }
+        .common-line span { color: #60a5fa; font-weight: 600; }
         .full-btn {
             position: absolute;
             top: 2rem;
@@ -395,13 +343,9 @@
             border: 1px solid rgba(96, 165, 250, 0.3);
             color: #60a5fa;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: 0.3s;
         }
-
-        .full-btn:active {
-            transform: scale(0.95);
-            background: rgba(96, 165, 250, 0.2);
-        }
+        .full-btn:active { transform: scale(0.95); background: rgba(96, 165, 250, 0.2); }
 
         .full-mask {
             position: fixed;
@@ -411,19 +355,15 @@
             display: none;
             padding: 2rem;
         }
-
-        .full-mask.show {
-            display: flex;
-        }
-
+        .full-mask.show { display: flex; }
         .full-content {
             width: 100%;
             max-width: 900px;
             margin: auto;
             padding: 3rem;
             overflow-y: auto;
+            height: 100%;
         }
-
         .full-close {
             position: absolute;
             top: 2rem;
@@ -440,31 +380,26 @@
             opacity: 0;
             animation: fadeUp 1s ease forwards 1.4s;
         }
-
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
             padding: 0 8% 4rem;
         }
-
         .card {
             padding: 2.5rem;
             opacity: 0;
             transform: translateY(30px);
             transition: 0.4s;
         }
-
         .card:nth-child(1) { animation: fadeUp 1s ease forwards 0.8s; }
         .card:nth-child(2) { animation: fadeUp 1s ease forwards 1s; }
         .card:nth-child(3) { animation: fadeUp 1s ease forwards 1.2s; }
-
         .card:hover {
             transform: translateY(-10px);
             border-color: rgba(96, 165, 250, 0.4);
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 25px rgba(96, 165, 250, 0.1);
         }
-
         .card h3 {
             margin-bottom: 1rem;
             font-size: 1.5rem;
@@ -472,18 +407,12 @@
             align-items: center;
             gap: 0.6rem;
         }
-
         .card h3::before {
             content: "✦";
             color: #60a5fa;
             font-size: 1.8rem;
         }
-
-        .card p {
-            color: #6b7280;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
+        .card p { color: #6b7280; line-height: 1.7; margin-bottom: 1.5rem; }
 
         .update-notice {
             margin: 0 8% 4rem;
@@ -491,11 +420,14 @@
             opacity: 0;
             animation: fadeUp 1s ease forwards 1.5s;
         }
-
-        .update-time {
-            color: #60a5fa;
-            font-weight: 600;
+        .update-time { color: #60a5fa; font-weight: 600; }
+        .update-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #6b7280;
+            line-height: 1.8;
         }
+        .update-item:last-child { border-bottom: none; }
 
         footer {
             text-align: center;
@@ -508,7 +440,6 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes gradientFlow {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -535,12 +466,8 @@
             font-size: 22px;
             transition: 0.3s;
         }
+        .ai-float-btn:active { transform: scale(0.9); }
 
-        .ai-float-btn:active {
-            transform: scale(0.9);
-        }
-
-        /* AI 对话窗 (保持原有风格) */
         .ai-mask {
             position: fixed;
             inset: 0;
@@ -550,16 +477,78 @@
             pointer-events: none;
             transition: 0.4s;
         }
-        .ai-mask.show {
-            opacity: 1;
-            pointer-events: auto;
+        .ai-mask.show { opacity: 1; pointer-events: auto; }
+        .ai-dialog-wrap {
+            position: absolute;
+            left: 50%;
+            bottom: 120px;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
         }
-
-        /* 省略AI其他样式，与之前版本相同，此处为简洁略，实际代码已包含 */
+        .ai-chat-history {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+        .msg-user, .msg-ai { margin: 10px 0; line-height: 1.6; }
+        .msg-user { text-align: right; }
+        .msg-ai { text-align: left; }
+        .msg-user span {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 14px 14px 2px 14px;
+            background: rgba(56, 189, 248, 0.2);
+            max-width: 85%;
+        }
+        .msg-ai span {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 14px 14px 14px 2px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 85%;
+        }
+        .ai-input-box { display: flex; gap: 10px; }
+        .ai-input-box input {
+            flex: 1;
+            padding: 14px 18px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #d1d5db;
+            font-size: 16px;
+            outline: none;
+        }
+        .ai-input-box button {
+            padding: 14px 24px;
+            border-radius: 30px;
+            border: none;
+            background: #60a5fa;
+            color: #020408;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .ai-input-box button:active { transform: scale(0.93); }
+        .close-ai {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: #ccc;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
-<!-- 进入前提示 -->
+
+<!-- 进入提示 -->
 <div class="notice-overlay" id="noticeOverlay">
     <div class="notice-card">
         <div class="notice-title">基于 tixmakefuture.github.io 的测试版</div>
@@ -574,29 +563,200 @@
 <!-- 水印层 -->
 <div id="watermark"></div>
 
-<!-- 页面内容与之前开发者版结构相同，此处省略具体重复代码，实际完整版包含所有区块 -->
-<nav class="glass">...</nav>
-<!-- 其余部分略，与上一版本相同，加上水印生成脚本 -->
+<nav class="glass">
+    <div class="logo">重装上阵社区</div>
+    <div class="nav-links">
+        <a href="#home">首页</a>
+        <a href="#features">社区</a>
+        <a href="#update">版本更新</a>
+        <a href="#about">关于我们</a>
+    </div>
+</nav>
+
+<section class="hero glass" id="home">
+    <h1>欢迎来到重装上阵玩家社区</h1>
+    <p>在这里，我们一起分享机甲创意、组队开黑、交流战术，打造属于玩家自己的交流天地。</p>
+    <div class="btn-group">
+        <a href="javascript:void(0);" onclick="alert('抖音群号：664859491263，快去抖音搜索加入吧！')" class="btn btn-primary">加入抖音群聊</a>
+        <a href="#features" class="btn btn-secondary">了解更多</a>
+    </div>
+    <div class="unlock-wrap glass">
+        <input type="text" class="unlock-input" id="cardPwd" placeholder="输入卡密查看专属内容">
+        <button class="btn btn-primary" style="width:100%;" onclick="checkCardPwd()">立即解锁</button>
+        <div class="unlock-result glass" id="unlockRes"></div>
+    </div>
+</section>
+
+<section class="common-box glass">
+    <h3>交友栏</h3>
+    <button class="full-btn" onclick="openFriendFull()">全屏查看</button>
+    <div class="common-list-wrap" id="homeFriendList"></div>
+</section>
+
+<section class="common-box glass">
+    <h3>悬赏令</h3>
+    <button class="full-btn" onclick="openRewardFull()">全屏查看</button>
+    <div class="common-list-wrap" id="homeRewardList"></div>
+</section>
+
+<div class="full-mask" id="friendFullMask">
+    <span class="full-close" onclick="closeFriendFull()">&times;</span>
+    <div class="full-content glass" id="fullFriendList"></div>
+</div>
+
+<div class="full-mask" id="rewardFullMask">
+    <span class="full-close" onclick="closeRewardFull()">&times;</span>
+    <div class="full-content glass" id="fullRewardList"></div>
+</div>
+
+<section class="author-box glass">
+    <h3>作者给大家的话</h3>
+    <div class="author-word">
+        感谢每一位喜欢重装上阵、支持本社区的小伙伴<br>
+        愿我们永远热爱机甲，保持初心<br>
+        一起游戏、一起交友，不负每一次相遇✨
+    </div>
+</section>
+
+<section class="features" id="features">
+    <div class="card glass">
+        <h3>机甲分享</h3>
+        <p>上传你的创意机甲蓝图，和大家一起讨论设计思路。</p>
+        <a href="javascript:void(0);" onclick="alert('功能请前往抖音群聊体验')" class="btn btn-secondary">立即分享</a>
+    </div>
+    <div class="card glass">
+        <h3>组队开黑</h3>
+        <p>寻找队友，一起排位，告别单排孤独。</p>
+        <a href="javascript:void(0);" onclick="alert('组队请加入抖音群')" class="btn btn-secondary">寻找队友</a>
+    </div>
+    <div class="card glass">
+        <h3>战术交流</h3>
+        <p>分享对战技巧，提升实力。</p>
+        <a href="javascript:void(0);" onclick="alert('战术交流在群内进行')" class="btn btn-secondary">交流战术</a>
+    </div>
+</section>
+
+<section class="update-notice glass" id="update">
+    <h3>版本更新公告</h3>
+    <div class="update-item">
+        <div class="update-time">2026.05.19 · 高端视觉升级</div>
+        <p>全新动态光晕背景，按钮梯度阴影，卡片悬浮效果提升。</p>
+    </div>
+    <div class="update-item">
+        <div class="update-time">2026.05.12 · 暗黑开发者版发布</div>
+        <p>全站暗黑风格固化，增加开发者模式与防泄密水印。</p>
+    </div>
+</section>
+
+<footer id="about" class="glass">
+    <p>&copy; 2026 重装上阵玩家社区 抖音矽忈</p>
+</footer>
+
+<div class="ai-float-btn" id="aiBtn" onclick="openAI()">AI</div>
+
+<div class="ai-mask" id="aiMask">
+    <div class="close-ai" onclick="closeAI()">&times;</div>
+    <div class="ai-dialog-wrap">
+        <div class="ai-chat-history" id="chatHistory"></div>
+        <div class="ai-input-box">
+            <input type="text" id="aiInput" placeholder="输入问题..." onkeydown="if(event.key==='Enter')sendAIMsg()">
+            <button onclick="sendAIMsg()">发送</button>
+        </div>
+    </div>
+</div>
 
 <script>
     // 生成水印
     (function() {
         const container = document.getElementById('watermark');
         const text = '请勿泄密测试版内容 2026抖音矽忈';
-        const cols = 8, rows = 6;
-        for (let i = 0; i < rows; i++) {
-            for (let j = 0; j < cols; j++) {
+        for (let i = 0; i < 6; i++) {
+            for (let j = 0; j < 8; j++) {
                 const span = document.createElement('span');
                 span.className = 'watermark-text';
                 span.textContent = text;
                 span.style.left = (j * 12.5 + 2) + '%';
                 span.style.top = (i * 16.6 + 2) + '%';
-                span.style.transform = `rotate(-20deg)`;
                 container.appendChild(span);
             }
         }
     })();
-    // 其余交互脚本与之前一致
+
+    const friendData = [
+        { douyin:"矽忈", gameName:"矽忈", code:"3195953326" },
+        { douyin:"3ooy1415", gameName:"爱得去", code:"3359527311" },
+    ];
+    const rewardData = [
+        { gameName:"夜明|獃獃魚呀", code:"1461657317" },
+        { gameName:"默默太普通弟", code:"3297324323" },
+        { gameName:"行星发动机点燃", code:"1566302329" },
+    ];
+
+    function renderFriend(){
+        let html = '';
+        friendData.forEach(item=>{
+            html += `<div class="common-line"><span>抖音：</span>${item.douyin} <span>游戏：</span>${item.gameName} <span>编号：</span>${item.code}</div>`;
+        });
+        document.getElementById('homeFriendList').innerHTML = html;
+        document.getElementById('fullFriendList').innerHTML = html;
+    }
+    function renderReward(){
+        let html = '';
+        rewardData.forEach(item=>{
+            html += `<div class="common-line"><span>游戏：</span>${item.gameName} <span>编号：</span>${item.code}</div>`;
+        });
+        document.getElementById('homeRewardList').innerHTML = html;
+        document.getElementById('fullRewardList').innerHTML = html;
+    }
+    renderFriend(); renderReward();
+
+    function openFriendFull(){ document.getElementById('friendFullMask').classList.add('show'); }
+    function closeFriendFull(){ document.getElementById('friendFullMask').classList.remove('show'); }
+    function openRewardFull(){ document.getElementById('rewardFullMask').classList.add('show'); }
+    function closeRewardFull(){ document.getElementById('rewardFullMask').classList.remove('show'); }
+
+    const rightCardPwd = "UmVhc3NlbWJseSBJcyBUaGUgTW9zdCBGdW4gR2FtZSBJbiBUaGUgV29ybGQu";
+    function checkCardPwd(){
+        let val = document.getElementById("cardPwd").value.trim();
+        let res = document.getElementById("unlockRes");
+        if(val === rightCardPwd){
+            res.className = "unlock-result glass success-text";
+            res.innerHTML = "验证成功！已解锁专属内容<br>网站已更新至暗黑开发者版";
+            res.style.display = "block";
+        } else {
+            res.className = "unlock-result glass error-text";
+            res.innerHTML = "卡密错误，请重试";
+            res.style.display = "block";
+        }
+    }
+
+    function openAI(){
+        document.getElementById('aiMask').classList.add('show');
+    }
+    function closeAI(){
+        document.getElementById('aiMask').classList.remove('show');
+    }
+    function getAIReply(text){
+        const kw = text.toLowerCase();
+        if(kw.includes('机甲')) return "你可以在社区分享原创机甲蓝图。";
+        if(kw.includes('组队')) return "加入抖音群聊：664859491263 找队友。";
+        if(kw.includes('战术')) return "利用地形卡位，远近武器配合。";
+        return "可以问我机甲、组队、战术相关问题。";
+    }
+    function sendAIMsg(){
+        let input = document.getElementById('aiInput');
+        let history = document.getElementById('chatHistory');
+        let text = input.value.trim();
+        if(!text) return;
+        history.innerHTML += `<div class="msg-user"><span>${text}</span></div>`;
+        input.value = '';
+        setTimeout(()=>{
+            let rep = getAIReply(text);
+            history.innerHTML += `<div class="msg-ai"><span>${rep}</span></div>`;
+            history.scrollTop = history.scrollHeight;
+        }, 300);
+        history.scrollTop = history.scrollHeight;
+    }
 </script>
 </body>
 </html>
