@@ -1,9 +1,10 @@
+//新版测试
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>重装上阵 · 开发者测试版</title>
+    <title>重装上阵 · 玩家社区（开发者版）</title>
     <style>
         * {
             margin: 0;
@@ -13,20 +14,26 @@
         }
 
         :root {
-            --bg-start: #010314;
-            --bg-mid: #0a0f24;
-            --bg-end: #030617;
-            --glass-bg: rgba(20, 30, 50, 0.35);
-            --glass-border: rgba(255, 255, 255, 0.06);
+            --bg-start: #020408;
+            --bg-mid: #080d18;
+            --bg-end: #040810;
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --text-primary: #d1d5db;
             --text-secondary: #6b7280;
             --accent: #60a5fa;
+            --accent-glow: rgba(96, 165, 250, 0.25);
+            --card-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+            --btn-shadow: 0 6px 22px rgba(96, 165, 250, 0.25);
+            --btn-hover-shadow: 0 10px 30px rgba(96, 165, 250, 0.35);
+            --scanline-opacity: 0.04;
+            --body-overlay: rgba(0, 0, 0, 0.3);
         }
 
         body {
-            background: linear-gradient(135deg, var(--bg-start), var(--bg-mid), var(--bg-end));
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
             background-size: 400% 400%;
-            animation: gradientFlow 18s ease infinite;
+            animation: gradientFlow 15s ease infinite;
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
@@ -39,15 +46,12 @@
             position: fixed;
             inset: 0;
             pointer-events: none;
-            z-index: 0;
-            background:
-                radial-gradient(circle at 20% 30%, rgba(96, 165, 250, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
-            animation: orbFloat 12s ease-in-out infinite alternate;
-        }
-        @keyframes orbFloat {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(4%, -3%); }
+            z-index: 9997;
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 0, 0, var(--scanline-opacity)) 2px,
+                    rgba(0, 0, 0, var(--scanline-opacity)) 4px);
         }
 
         body::after {
@@ -55,112 +59,102 @@
             position: fixed;
             inset: 0;
             pointer-events: none;
-            z-index: 1;
-            background: repeating-linear-gradient(0deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(0, 0, 0, 0.03) 2px,
-                    rgba(0, 0, 0, 0.03) 4px);
+            z-index: 9996;
+            background: radial-gradient(ellipse at 50% 0%, rgba(30, 58, 95, 0.25) 0%, transparent 70%);
         }
 
-        /* 进入提示遮罩 */
+        /* 进入前提示遮罩 */
         .notice-overlay {
             position: fixed;
             inset: 0;
             z-index: 99999;
             background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            transition: opacity 0.3s ease;
         }
+
         .notice-card {
             max-width: 560px;
             width: 100%;
             padding: 2.5rem;
-            background: rgba(15, 25, 45, 0.6);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(24px);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             color: #cbd5e1;
             line-height: 1.8;
         }
+
         .notice-title {
-            font-size: 1.5rem;
-            font-weight: 700;
+            font-size: 1.4rem;
+            font-weight: 600;
             color: #f1f5f9;
             margin-bottom: 1.5rem;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             border-left: 4px solid #60a5fa;
-            padding-left: 1.2rem;
+            padding-left: 1rem;
         }
+
         .notice-text {
             font-size: 0.95rem;
             color: #94a3b8;
-            margin-bottom: 2rem;
+            margin-bottom: 1.8rem;
+            word-break: break-word;
         }
+
         .notice-text a {
             color: #60a5fa;
             text-decoration: none;
             border-bottom: 1px solid rgba(96, 165, 250, 0.4);
+            transition: border-color 0.2s;
         }
+
+        .notice-text a:hover {
+            border-bottom-color: #60a5fa;
+        }
+
         .notice-btn {
             display: inline-block;
-            padding: 0.9rem 2.5rem;
-            border-radius: 14px;
-            background: rgba(96, 165, 250, 0.9);
+            padding: 0.9rem 2.2rem;
+            border-radius: 12px;
+            background: rgba(96, 165, 250, 0.85);
             color: #020408;
-            font-weight: 700;
-            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
-            box-shadow: 0 8px 24px rgba(96, 165, 250, 0.35);
-            transition: all 0.25s ease;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+            box-shadow: 0 6px 22px rgba(96, 165, 250, 0.25);
             letter-spacing: 0.5px;
         }
+
         .notice-btn:hover {
-            background: #60a5fa;
+            background: rgba(96, 165, 250, 0.95);
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(96, 165, 250, 0.45);
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.35);
         }
+
         .notice-btn:active {
-            transform: translateY(2px) scale(0.97);
-            box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.4);
+            transform: translateY(2px) scale(0.96);
+            box-shadow: inset 0 6px 16px rgba(0, 0, 0, 0.55);
+            transition: all 0.08s ease;
         }
 
-        /* 水印 */
-        #watermark {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9995;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .watermark-text {
-            position: absolute;
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.08);
-            white-space: nowrap;
-            transform: rotate(-20deg);
-            user-select: none;
-            letter-spacing: 2px;
-        }
-
-        /* 玻璃效果 */
         .glass {
             background: var(--glass-bg);
-            border-radius: 20px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.02);
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            z-index: 2;
         }
 
         nav {
@@ -172,14 +166,18 @@
             top: 1rem;
             z-index: 999;
             margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
         }
+
         .logo {
             font-size: 1.6rem;
             font-weight: bold;
             color: var(--accent);
-            text-shadow: 0 0 20px rgba(96, 165, 250, 0.5);
-            letter-spacing: 1px;
+            text-shadow: 0 0 16px rgba(96, 165, 250, 0.35);
+            letter-spacing: 0.5px;
         }
+
         .nav-links a {
             color: #9ca3af;
             text-decoration: none;
@@ -189,6 +187,7 @@
             padding: 0.3rem 0;
             border-bottom: 2px solid transparent;
         }
+
         .nav-links a:hover {
             color: #60a5fa;
             border-bottom: 2px solid #60a5fa;
@@ -204,21 +203,16 @@
             padding: 3rem 2rem;
             margin-bottom: 3rem;
         }
+
         .hero h1 {
-            font-size: 4rem;
+            font-size: 3.8rem;
             margin-bottom: 1.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #e0f2fe, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
             opacity: 0;
-            animation: fadeUp 1s ease forwards 0.2s, textShine 3s infinite alternate;
+            animation: fadeUp 1s ease forwards 0.2s;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            font-weight: 700;
         }
-        @keyframes textShine {
-            0% { filter: drop-shadow(0 0 6px rgba(96, 165, 250, 0.4)); }
-            100% { filter: drop-shadow(0 0 15px rgba(96, 165, 250, 0.8)); }
-        }
+
         .hero p {
             font-size: 1.3rem;
             color: #6b7280;
@@ -235,83 +229,105 @@
             opacity: 0;
             animation: fadeUp 1s ease forwards 0.6s;
         }
+
         .btn {
-            padding: 1rem 2.4rem;
-            border-radius: 14px;
+            padding: 1rem 2.2rem;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 1.05rem;
             transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+            border: 1px solid transparent;
             cursor: pointer;
-            letter-spacing: 0.3px;
+            position: relative;
             user-select: none;
-            border: none;
         }
+
         .btn-primary {
-            background: linear-gradient(135deg, #3b82f6, #60a5fa);
-            color: #fff;
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
+            background: rgba(96, 165, 250, 0.85);
+            color: #020408;
+            box-shadow: 0 6px 22px rgba(96, 165, 250, 0.25), 0 2px 6px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
+
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 14px 32px rgba(59, 130, 246, 0.5);
+            background: rgba(96, 165, 250, 0.95);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.35), 0 4px 10px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.15);
         }
+
         .btn-primary:active {
-            transform: translateY(2px) scale(0.97);
-            box-shadow: inset 0 8px 20px rgba(0, 0, 0, 0.3);
-            transition: 0.1s;
+            transform: translateY(2px) scale(0.96);
+            box-shadow: inset 0 6px 16px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(96, 165, 250, 0.1);
+            transition: all 0.08s ease;
+            background: rgba(96, 165, 250, 0.75);
         }
+
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             color: #60a5fa;
-            border: 1px solid rgba(96, 165, 250, 0.3);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+            border-color: rgba(96, 165, 250, 0.35);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
+
         .btn-secondary:hover {
-            background: rgba(96, 165, 250, 0.12);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(96, 165, 250, 0.2);
+            background: rgba(96, 165, 250, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(96, 165, 250, 0.18), 0 3px 8px rgba(0, 0, 0, 0.4);
+            border-color: rgba(96, 165, 250, 0.5);
         }
+
         .btn-secondary:active {
-            transform: translateY(2px) scale(0.97);
-            box-shadow: inset 0 6px 16px rgba(0, 0, 0, 0.3);
+            transform: translateY(2px) scale(0.96);
+            box-shadow: inset 0 5px 14px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(96, 165, 250, 0.06);
+            transition: all 0.08s ease;
         }
 
         .unlock-wrap {
             width: 100%;
-            max-width: 440px;
+            max-width: 420px;
             margin-top: 2.5rem;
-            padding: 2.2rem;
+            padding: 2rem;
             opacity: 0;
             animation: fadeUp 1s ease forwards 0.7s;
         }
         .unlock-input {
             width: 100%;
-            padding: 14px 18px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
             color: #d1d5db;
             font-size: 16px;
             outline: none;
             margin-bottom: 1rem;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        .unlock-input::placeholder {
+            color: #6b7280;
         }
         .unlock-input:focus {
-            border-color: #60a5fa;
-            box-shadow: 0 0 16px rgba(96, 165, 250, 0.2);
+            border-color: rgba(96, 165, 250, 0.4);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 12px rgba(96, 165, 250, 0.1);
         }
         .unlock-result {
             margin-top: 1rem;
             padding: 1rem;
-            border-radius: 14px;
+            border-radius: 12px;
             display: none;
+            transition: all 0.4s ease;
         }
-        .success-text { color: #60a5fa; }
-        .error-text { color: #ef4444; }
+        .success-text {
+            color: #60a5fa;
+        }
+        .error-text {
+            color: #ef4444;
+        }
 
         .common-box {
-            margin: 0 8% 1.8rem;
+            margin: 0 8% 1.5rem;
             padding: 2rem;
             position: relative;
         }
@@ -326,26 +342,47 @@
             overflow-y: auto;
             padding-right: 0.5rem;
         }
+        .common-list-wrap::-webkit-scrollbar {
+            width: 6px;
+        }
+        .common-list-wrap::-webkit-scrollbar-thumb {
+            background: #60a5fa;
+            border-radius: 3px;
+        }
+        .common-list-wrap::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
         .common-line {
             padding: 0.9rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 1rem;
             color: #d1d5db;
         }
-        .common-line:last-child { border-bottom: none; }
-        .common-line span { color: #60a5fa; font-weight: 600; }
+        .common-line:last-child {
+            border-bottom: none;
+        }
+        .common-line span {
+            color: #60a5fa;
+        }
         .full-btn {
             position: absolute;
             top: 2rem;
             right: 2rem;
-            padding: 0.5rem 1.2rem;
-            border-radius: 10px;
-            background: rgba(96, 165, 250, 0.1);
+            padding: 0.4rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 8px;
             border: 1px solid rgba(96, 165, 250, 0.3);
+            background: rgba(96, 165, 250, 0.06);
             color: #60a5fa;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
-        .full-btn:active { transform: scale(0.95); background: rgba(96, 165, 250, 0.2); }
+        .full-btn:active {
+            transform: translateY(2px) scale(0.95);
+            box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.5);
+            transition: all 0.08s ease;
+        }
 
         .full-mask {
             position: fixed;
@@ -355,14 +392,16 @@
             display: none;
             padding: 2rem;
         }
-        .full-mask.show { display: flex; }
+        .full-mask.show {
+            display: flex;
+        }
         .full-content {
             width: 100%;
+            height: 100%;
             max-width: 900px;
             margin: auto;
             padding: 3rem;
             overflow-y: auto;
-            height: 100%;
         }
         .full-close {
             position: absolute;
@@ -371,6 +410,10 @@
             font-size: 2rem;
             color: #ccc;
             cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .full-close:hover {
+            color: #fff;
         }
 
         .author-box {
@@ -378,56 +421,100 @@
             padding: 2rem;
             text-align: center;
             opacity: 0;
+            transform: translateY(30px);
             animation: fadeUp 1s ease forwards 1.4s;
         }
+        .author-box h3 {
+            color: #6b7280;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+        .author-word {
+            font-size: 1.1rem;
+            color: #9ca3af;
+            line-height: 1.8;
+        }
+
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
             padding: 0 8% 4rem;
         }
+
         .card {
             padding: 2.5rem;
             opacity: 0;
             transform: translateY(30px);
-            transition: 0.4s;
         }
+
         .card:nth-child(1) { animation: fadeUp 1s ease forwards 0.8s; }
         .card:nth-child(2) { animation: fadeUp 1s ease forwards 1s; }
         .card:nth-child(3) { animation: fadeUp 1s ease forwards 1.2s; }
+
         .card:hover {
             transform: translateY(-10px);
             border-color: rgba(96, 165, 250, 0.4);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 25px rgba(96, 165, 250, 0.1);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 20px rgba(96, 165, 250, 0.06);
+            background: rgba(255, 255, 255, 0.03);
         }
+
         .card h3 {
             margin-bottom: 1rem;
+            color: #e2e8f0;
             font-size: 1.5rem;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.8rem;
         }
+
         .card h3::before {
             content: "✦";
             color: #60a5fa;
             font-size: 1.8rem;
         }
-        .card p { color: #6b7280; line-height: 1.7; margin-bottom: 1.5rem; }
+
+        .card p {
+            color: #6b7280;
+            line-height: 1.7;
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+        }
 
         .update-notice {
             margin: 0 8% 4rem;
             padding: 2.5rem;
             opacity: 0;
+            transform: translateY(30px);
             animation: fadeUp 1s ease forwards 1.5s;
         }
-        .update-time { color: #60a5fa; font-weight: 600; }
+        .update-notice h3 {
+            margin-bottom: 1rem;
+            color: #e2e8f0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .update-notice h3::before {
+            content: "✦";
+            color: #60a5fa;
+            font-size: 1.8rem;
+        }
         .update-item {
             padding: 1rem 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             color: #6b7280;
             line-height: 1.8;
         }
-        .update-item:last-child { border-bottom: none; }
+        .update-item:last-child {
+            border-bottom: none;
+        }
+        .update-time {
+            color: #60a5fa;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
 
         footer {
             text-align: center;
@@ -440,52 +527,112 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         @keyframes gradientFlow {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* AI 悬浮按钮 */
         .ai-float-btn {
             position: fixed;
             right: 25px;
             bottom: 25px;
             width: 60px;
             height: 60px;
-            border-radius: 30px;
-            background: linear-gradient(135deg, #3b82f6, #60a5fa);
-            box-shadow: 0 8px 28px rgba(59, 130, 246, 0.5);
+            border-radius: 50%;
+            background: rgba(96, 165, 250, 0.85);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 30px rgba(96, 165, 250, 0.25), 0 2px 8px rgba(0, 0, 0, 0.4);
             cursor: pointer;
             z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 22px;
-            transition: 0.3s;
+            font-size: 24px;
+            color: #020408;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
+            user-select: none;
         }
-        .ai-float-btn:active { transform: scale(0.9); }
+        .ai-float-btn.bounce {
+            transform: translate(8px, -8px) scale(1.15);
+        }
+        .ai-float-btn:active {
+            transform: scale(0.88);
+            box-shadow: inset 0 6px 16px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(96, 165, 250, 0.12);
+            transition: all 0.08s ease;
+        }
 
         .ai-mask {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.75);
             z-index: 10000;
             opacity: 0;
             pointer-events: none;
-            transition: 0.4s;
+            overflow: hidden;
+            transition: opacity 0.4s ease;
         }
-        .ai-mask.show { opacity: 1; pointer-events: auto; }
+        .ai-mask.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .ai-full-flash {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, #5E5CE6, #BF5AF2, #FF375F, #5AC8FA, #5E5CE6);
+            background-size: 400% 400%;
+            opacity: 0;
+        }
+        .ai-mask.show .ai-full-flash {
+            animation: fullStream 1.2s ease-out forwards;
+        }
+        @keyframes fullStream {
+            0% { background-position: 0% 50%; opacity: 0.2; }
+            50% { background-position: 100% 50%; opacity: 0.35; }
+            100% { background-position: 200% 50%; opacity: 0; }
+        }
+
+        .ai-light-ring {
+            position: absolute;
+            inset: 8px;
+            border-radius: 28px;
+            padding: 5px;
+            background: linear-gradient(120deg, #5E5CE6, #BF5AF2, #FF375F, #5AC8FA, #5E5CE6);
+            background-size: 300% 300%;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: aiAppleFlow 6s ease-in-out infinite;
+            filter: blur(3px);
+            opacity: 0.9;
+        }
+        @keyframes aiAppleFlow {
+            0% { background-position: 0% 50%; opacity: 0.7; }
+            50% { background-position: 100% 50%; opacity: 1; }
+            100% { background-position: 0% 50%; opacity: 0.7; }
+        }
+
         .ai-dialog-wrap {
             position: absolute;
             left: 50%;
             bottom: 120px;
-            transform: translateX(-50%);
+            transform: translateX(-50%) scale(0.85) translateY(30px);
+            opacity: 0;
             width: 90%;
             max-width: 500px;
+            transition: all 0.6s cubic-bezier(0.2, 0, 0.2, 1);
+            transition-delay: 1.2s;
         }
+        .ai-mask.show .ai-dialog-wrap {
+            transform: translateX(-50%) scale(1) translateY(0);
+            opacity: 1;
+        }
+
         .ai-chat-history {
             max-height: 300px;
             overflow-y: auto;
@@ -495,7 +642,10 @@
             border-radius: 16px;
             backdrop-filter: blur(10px);
         }
-        .msg-user, .msg-ai { margin: 10px 0; line-height: 1.6; }
+        .msg-user, .msg-ai {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
         .msg-user { text-align: right; }
         .msg-ai { text-align: left; }
         .msg-user span {
@@ -513,7 +663,11 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             max-width: 85%;
         }
-        .ai-input-box { display: flex; gap: 10px; }
+
+        .ai-input-box {
+            display: flex;
+            gap: 10px;
+        }
         .ai-input-box input {
             flex: 1;
             padding: 14px 18px;
@@ -523,6 +677,7 @@
             color: #d1d5db;
             font-size: 16px;
             outline: none;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.35);
         }
         .ai-input-box button {
             padding: 14px 24px;
@@ -532,9 +687,14 @@
             color: #020408;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
+            box-shadow: 0 3px 14px rgba(96, 165, 250, 0.25);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0.2, 1);
         }
-        .ai-input-box button:active { transform: scale(0.93); }
+        .ai-input-box button:active {
+            transform: scale(0.93);
+            box-shadow: inset 0 5px 14px rgba(0, 0, 0, 0.5);
+            transition: all 0.08s ease;
+        }
         .close-ai {
             position: absolute;
             top: 30px;
@@ -543,12 +703,16 @@
             font-size: 30px;
             cursor: pointer;
             z-index: 10;
+            transition: color 0.3s ease;
+        }
+        .close-ai:hover {
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
-<!-- 进入提示 -->
+<!-- 进入前提示遮罩 -->
 <div class="notice-overlay" id="noticeOverlay">
     <div class="notice-card">
         <div class="notice-title">基于 tixmakefuture.github.io 的测试版</div>
@@ -559,9 +723,6 @@
         <button class="notice-btn" onclick="document.getElementById('noticeOverlay').style.display='none'">我已了解，进入页面</button>
     </div>
 </div>
-
-<!-- 水印层 -->
-<div id="watermark"></div>
 
 <nav class="glass">
     <div class="logo">重装上阵社区</div>
@@ -580,6 +741,7 @@
         <a href="javascript:void(0);" onclick="alert('抖音群号：664859491263，快去抖音搜索加入吧！')" class="btn btn-primary">加入抖音群聊</a>
         <a href="#features" class="btn btn-secondary">了解更多</a>
     </div>
+
     <div class="unlock-wrap glass">
         <input type="text" class="unlock-input" id="cardPwd" placeholder="输入卡密查看专属内容">
         <button class="btn btn-primary" style="width:100%;" onclick="checkCardPwd()">立即解锁</button>
@@ -587,23 +749,27 @@
     </div>
 </section>
 
+<!-- 交友栏 -->
 <section class="common-box glass">
     <h3>交友栏</h3>
     <button class="full-btn" onclick="openFriendFull()">全屏查看</button>
     <div class="common-list-wrap" id="homeFriendList"></div>
 </section>
 
+<!-- 悬赏令 -->
 <section class="common-box glass">
     <h3>悬赏令</h3>
     <button class="full-btn" onclick="openRewardFull()">全屏查看</button>
     <div class="common-list-wrap" id="homeRewardList"></div>
 </section>
 
+<!-- 交友全屏弹窗 -->
 <div class="full-mask" id="friendFullMask">
     <span class="full-close" onclick="closeFriendFull()">&times;</span>
     <div class="full-content glass" id="fullFriendList"></div>
 </div>
 
+<!-- 悬赏令全屏弹窗 -->
 <div class="full-mask" id="rewardFullMask">
     <span class="full-close" onclick="closeRewardFull()">&times;</span>
     <div class="full-content glass" id="fullRewardList"></div>
@@ -621,71 +787,63 @@
 <section class="features" id="features">
     <div class="card glass">
         <h3>机甲分享</h3>
-        <p>上传你的创意机甲蓝图，和大家一起讨论设计思路。</p>
-        <a href="javascript:void(0);" onclick="alert('功能请前往抖音群聊体验')" class="btn btn-secondary">立即分享</a>
+        <p>上传你的创意机甲蓝图，和大家一起讨论设计思路，让你的作品被更多人看见。</p>
+        <a href="javascript:void(0);" onclick="alert('机甲分享功能请前往抖音搜索664859491263加入群聊！')" class="btn btn-secondary">立即分享</a>
     </div>
     <div class="card glass">
         <h3>组队开黑</h3>
-        <p>寻找队友，一起排位，告别单排孤独。</p>
-        <a href="javascript:void(0);" onclick="alert('组队请加入抖音群')" class="btn btn-secondary">寻找队友</a>
+        <p>寻找志同道合的队友，一起打排位、做活动，告别单排的孤独。</p>
+        <a href="javascript:void(0);" onclick="alert('组队开黑功能请前往抖音搜索664859491263加入群聊！')" class="btn btn-secondary">寻找队友</a>
     </div>
     <div class="card glass">
         <h3>战术交流</h3>
-        <p>分享对战技巧，提升实力。</p>
-        <a href="javascript:void(0);" onclick="alert('战术交流在群内进行')" class="btn btn-secondary">交流战术</a>
+        <p>分享你的对战技巧、地图理解，一起进步，成为更强的重装玩家。</p>
+        <a href="javascript:void(0);" onclick="alert('战术交流功能请前往抖音搜索664859491263加入群聊！')" class="btn btn-secondary">交流战术</a>
     </div>
 </section>
 
 <section class="update-notice glass" id="update">
     <h3>版本更新公告</h3>
     <div class="update-item">
-        <div class="update-time">2026.05.19 · 高端视觉升级</div>
-        <p>全新动态光晕背景，按钮梯度阴影，卡片悬浮效果提升。</p>
+        <div class="update-time">2026.05.12 · 暗黑开发者版独立发布</div>
+        <p>全站暗黑高级风格固化，按钮按压阴影反馈，扫描线纹理，无需卡密切换。</p>
     </div>
     <div class="update-item">
-        <div class="update-time">2026.05.12 · 暗黑开发者版发布</div>
-        <p>全站暗黑风格固化，增加开发者模式与防泄密水印。</p>
+        <div class="update-time">2026.05.08 · 新增通缉令、交友栏功能</div>
+        <p>新增通缉令入口、交友栏专属板块、界面独立布局展示。</p>
+    </div>
+    <div class="update-item">
+        <div class="update-time">2026.05.07 · 定制Apple Intelligence动画版</div>
+        <p>AI点击新增小球右下角弹跳、全屏流光铺满、延迟弹出聊天框、边框加粗。</p>
     </div>
 </section>
 
 <footer id="about" class="glass">
-    <p>&copy; 2026 重装上阵玩家社区 抖音矽忈</p>
+    <p>&copy; 2026 重装上阵玩家社区 抖音矽忈 · 热爱机甲，永不落幕</p>
 </footer>
 
 <div class="ai-float-btn" id="aiBtn" onclick="openAI()">AI</div>
 
 <div class="ai-mask" id="aiMask">
+    <div class="ai-full-flash"></div>
+    <div class="ai-light-ring"></div>
     <div class="close-ai" onclick="closeAI()">&times;</div>
+
     <div class="ai-dialog-wrap">
         <div class="ai-chat-history" id="chatHistory"></div>
         <div class="ai-input-box">
-            <input type="text" id="aiInput" placeholder="输入问题..." onkeydown="if(event.key==='Enter')sendAIMsg()">
+            <input type="text" id="aiInput" placeholder="输入问题，回车发送..." onkeydown="if(event.key==='Enter')sendAIMsg()">
             <button onclick="sendAIMsg()">发送</button>
         </div>
     </div>
 </div>
 
 <script>
-    // 生成水印
-    (function() {
-        const container = document.getElementById('watermark');
-        const text = '请勿泄密测试版内容 2026抖音矽忈';
-        for (let i = 0; i < 6; i++) {
-            for (let j = 0; j < 8; j++) {
-                const span = document.createElement('span');
-                span.className = 'watermark-text';
-                span.textContent = text;
-                span.style.left = (j * 12.5 + 2) + '%';
-                span.style.top = (i * 16.6 + 2) + '%';
-                container.appendChild(span);
-            }
-        }
-    })();
-
     const friendData = [
         { douyin:"矽忈", gameName:"矽忈", code:"3195953326" },
         { douyin:"3ooy1415", gameName:"爱得去", code:"3359527311" },
     ];
+
     const rewardData = [
         { gameName:"夜明|獃獃魚呀", code:"1461657317" },
         { gameName:"默默太普通弟", code:"3297324323" },
@@ -695,66 +853,108 @@
     function renderFriend(){
         let html = '';
         friendData.forEach(item=>{
-            html += `<div class="common-line"><span>抖音：</span>${item.douyin} <span>游戏：</span>${item.gameName} <span>编号：</span>${item.code}</div>`;
+            html += `<div class="common-line">
+                <span>抖音名：</span>${item.douyin} &nbsp;&nbsp;
+                <span>重装名：</span>${item.gameName} &nbsp;&nbsp;
+                <span>编号：</span>${item.code}
+            </div>`;
         });
         document.getElementById('homeFriendList').innerHTML = html;
         document.getElementById('fullFriendList').innerHTML = html;
     }
+
     function renderReward(){
         let html = '';
         rewardData.forEach(item=>{
-            html += `<div class="common-line"><span>游戏：</span>${item.gameName} <span>编号：</span>${item.code}</div>`;
+            html += `<div class="common-line">
+                <span>游戏名称：</span>${item.gameName} &nbsp;&nbsp;
+                <span>编号：</span>${item.code}
+            </div>`;
         });
         document.getElementById('homeRewardList').innerHTML = html;
         document.getElementById('fullRewardList').innerHTML = html;
     }
-    renderFriend(); renderReward();
 
-    function openFriendFull(){ document.getElementById('friendFullMask').classList.add('show'); }
-    function closeFriendFull(){ document.getElementById('friendFullMask').classList.remove('show'); }
-    function openRewardFull(){ document.getElementById('rewardFullMask').classList.add('show'); }
-    function closeRewardFull(){ document.getElementById('rewardFullMask').classList.remove('show'); }
+    renderFriend();
+    renderReward();
+
+    function openFriendFull(){
+        document.getElementById('friendFullMask').classList.add('show');
+    }
+    function closeFriendFull(){
+        document.getElementById('friendFullMask').classList.remove('show');
+    }
+    function openRewardFull(){
+        document.getElementById('rewardFullMask').classList.add('show');
+    }
+    function closeRewardFull(){
+        document.getElementById('rewardFullMask').classList.remove('show');
+    }
 
     const rightCardPwd = "UmVhc3NlbWJseSBJcyBUaGUgTW9zdCBGdW4gR2FtZSBJbiBUaGUgV29ybGQu";
+    const latestContent = `验证成功！已解锁专属内容<br><br>
+    网站已更新至暗黑开发者版<br>
+    全屏流光+按压阴影+扫描线纹理`;
+
     function checkCardPwd(){
         let val = document.getElementById("cardPwd").value.trim();
-        let res = document.getElementById("unlockRes");
+        let resBox = document.getElementById("unlockRes");
         if(val === rightCardPwd){
-            res.className = "unlock-result glass success-text";
-            res.innerHTML = "验证成功！已解锁专属内容<br>网站已更新至暗黑开发者版";
-            res.style.display = "block";
-        } else {
-            res.className = "unlock-result glass error-text";
-            res.innerHTML = "卡密错误，请重试";
-            res.style.display = "block";
+            resBox.className = "unlock-result glass success-text";
+            resBox.innerHTML = latestContent;
+            resBox.style.display = "block";
+        }else{
+            resBox.className = "unlock-result glass error-text";
+            resBox.innerHTML = "卡密错误，请重新输入！";
+            resBox.style.display = "block";
         }
     }
 
     function openAI(){
+        const btn = document.getElementById('aiBtn');
+        btn.classList.add('bounce');
+        setTimeout(()=>btn.classList.remove('bounce'),300);
         document.getElementById('aiMask').classList.add('show');
     }
     function closeAI(){
         document.getElementById('aiMask').classList.remove('show');
     }
+
     function getAIReply(text){
-        const kw = text.toLowerCase();
-        if(kw.includes('机甲')) return "你可以在社区分享原创机甲蓝图。";
-        if(kw.includes('组队')) return "加入抖音群聊：664859491263 找队友。";
-        if(kw.includes('战术')) return "利用地形卡位，远近武器配合。";
-        return "可以问我机甲、组队、战术相关问题。";
+        let kw = text.toLowerCase();
+        if(kw.includes('机甲') || kw.includes('蓝图')){
+            return "你可以在社区分享原创机甲蓝图，也可以查看其他玩家的创意作品，互相交流设计思路哦。";
+        }
+        if(kw.includes('组队') || kw.includes('开黑')){
+            return "想要组队开黑，可以加入我们抖音群聊：664859491263，里面很多小伙伴随时一起玩。";
+        }
+        if(kw.includes('战术') || kw.includes('技巧') || kw.includes('打法')){
+            return "重装上阵对战可以多利用地形卡位、远近武器搭配，合理分工攻防，多和队友配合胜率更高。";
+        }
+        if(kw.includes('社区') || kw.includes('加入')){
+            return "欢迎来到重装上阵玩家社区，这里可以分享机甲、找队友、交流战术，抖音群：664859491263。";
+        }
+        if(kw.includes('你好') || kw.includes('哈喽')){
+            return "你好呀！我是重装上阵AI助手，可以为你解答机甲、组队、玩法、社区相关问题~";
+        }
+        return "我暂时还没学会这个问题，你可以问我机甲分享、组队开黑、战术玩法、社区加入相关问题哦！";
     }
+
     function sendAIMsg(){
         let input = document.getElementById('aiInput');
         let history = document.getElementById('chatHistory');
         let text = input.value.trim();
         if(!text) return;
+
         history.innerHTML += `<div class="msg-user"><span>${text}</span></div>`;
         input.value = '';
+
         setTimeout(()=>{
             let rep = getAIReply(text);
             history.innerHTML += `<div class="msg-ai"><span>${rep}</span></div>`;
             history.scrollTop = history.scrollHeight;
         }, 300);
+
         history.scrollTop = history.scrollHeight;
     }
 </script>
