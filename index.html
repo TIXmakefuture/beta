@@ -2,14 +2,14 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>重装上阵 · 元宇宙经济系统 | 虚拟币 + 广告位租赁</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>重装上阵 · 玩家社区 | 虚拟币系统</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Segoe UI", "Inter", system-ui, sans-serif;
+            font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
         }
 
         body {
@@ -29,18 +29,18 @@
             -webkit-backdrop-filter: blur(18px);
             border: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 10px 36px rgba(0, 0, 0, 0.25);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.2rem 5%;
+            padding: 1rem 5%;
             position: sticky;
             top: 1rem;
             z-index: 999;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             flex-wrap: wrap;
             gap: 1rem;
         }
@@ -49,45 +49,58 @@
             font-size: 1.6rem;
             font-weight: bold;
             color: #38bdf8;
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
         }
 
-        .token-panel {
+        /* 虚拟币面板 - 高端嵌入 */
+        .coin-panel {
             display: flex;
-            gap: 1.2rem;
-            background: rgba(0,0,0,0.5);
-            padding: 0.5rem 1.2rem;
-            border-radius: 60px;
             align-items: center;
-            backdrop-filter: blur(8px);
+            gap: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            padding: 0.4rem 1rem 0.4rem 1.5rem;
+            border-radius: 60px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
         }
-        .token-balance {
-            font-weight: bold;
-            background: #1e293b;
-            padding: 0.4rem 1rem;
-            border-radius: 40px;
+        .coin-balance {
+            font-weight: 800;
+            font-size: 1.3rem;
             color: #facc15;
-            font-size: 1.2rem;
+            letter-spacing: 1px;
         }
-        .token-balance span {
-            color: #e2e8f0;
-            font-size: 0.9rem;
+        .coin-balance small {
+            font-size: 0.75rem;
+            color: #94a3b8;
+            font-weight: normal;
         }
-        .token-earn-btn {
+        .coin-btn {
             background: #38bdf8;
             border: none;
             padding: 0.4rem 1rem;
-            border-radius: 30px;
+            border-radius: 40px;
             font-weight: 600;
             cursor: pointer;
-            color: #0f172a;
             transition: 0.2s;
+            color: #0f172a;
         }
+        .coin-btn-outline {
+            background: transparent;
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+        }
+
         .nav-links a {
             color: #cbd5e1;
             text-decoration: none;
-            margin-left: 1.5rem;
-            font-size: 0.95rem;
+            margin-left: 1.8rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-links a:hover {
+            color: #38bdf8;
+            border-bottom: 2px solid #38bdf8;
         }
 
         .hero {
@@ -99,572 +112,549 @@
             padding: 2rem 2rem;
             margin-bottom: 2rem;
         }
-
         .hero h1 {
-            font-size: 2.8rem;
-            background: linear-gradient(135deg,#fff,#38bdf8);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #ffffff, #38bdf8);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-
+        .hero p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 650px;
+            margin-bottom: 2rem;
+        }
         .btn-group {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
             justify-content: center;
-            margin: 1.5rem 0;
+            margin-bottom: 2rem;
         }
         .btn {
-            padding: 0.7rem 1.8rem;
+            padding: 0.8rem 2rem;
             border-radius: 40px;
             font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s;
             cursor: pointer;
             border: none;
-            transition: 0.2s;
+            font-size: 0.95rem;
         }
         .btn-primary {
             background: #38bdf8;
             color: #0f172a;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
         }
         .btn-secondary {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.08);
             color: #38bdf8;
-            border: 1px solid #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.6);
         }
+        .btn-secondary:hover, .btn-primary:hover {
+            transform: translateY(-3px);
+        }
+
         .unlock-wrap {
             width: 100%;
-            max-width: 400px;
-            margin-top: 1rem;
-            padding: 1.5rem;
+            max-width: 420px;
+            margin-top: 0.5rem;
+            padding: 1.8rem;
         }
         .unlock-input {
             width: 100%;
-            padding: 12px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid #2d3a5e;
-            border-radius: 40px;
-            color: white;
-            margin-bottom: 0.8rem;
-        }
-
-        /* 广告位专区 */
-        .ad-slot-section {
-            margin: 2rem 5%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.8rem;
-        }
-        .ad-card {
-            padding: 1.5rem;
-            transition: 0.2s;
-        }
-        .ad-header {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed #3b4a6b;
-            padding-bottom: 0.5rem;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 60px;
+            color: #e2e8f0;
+            font-size: 1rem;
+            outline: none;
             margin-bottom: 1rem;
         }
-        .ad-price {
-            color: #facc15;
-            font-weight: bold;
-        }
-        .ad-content {
-            min-height: 100px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 16px;
+        .unlock-result {
+            margin-top: 1rem;
             padding: 1rem;
-            margin: 1rem 0;
-            text-align: center;
+            border-radius: 20px;
+            display: none;
             font-size: 0.9rem;
-            word-break: break-word;
         }
-        .rent-btn {
-            background: #2dd4bf;
-            border: none;
-            width: 100%;
-            padding: 10px;
-            border-radius: 40px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .empty-ad {
-            color: #94a3b8;
-            font-style: italic;
-        }
+        .success-text { color: #38bdf8; background: rgba(56,189,248,0.1); }
+        .error-text { color: #f87171; background: rgba(248,113,113,0.1); }
 
-        .task-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-            gap: 1rem;
-            margin: 2rem 5%;
-        }
-        .task-card {
-            padding: 1.2rem;
-            text-align: center;
-        }
-        .task-btn {
-            margin-top: 0.8rem;
-            background: #3b4a6b;
-            padding: 8px;
-            border-radius: 30px;
-            cursor: pointer;
-        }
-        .features, .update-notice, .author-box {
-            margin: 2rem 5%;
+        /* 公用卡片区 */
+        .common-box {
+            margin: 0 5% 1.5rem;
             padding: 1.5rem;
         }
+        .common-box h3 {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .common-list-wrap {
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        .common-line {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 1rem 5% 3rem;
+        }
+        .card {
+            padding: 2rem;
+            transition: 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.1);
+        }
+        .card h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .update-notice {
+            margin: 1.5rem 5%;
+            padding: 2rem;
+        }
+        .update-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .author-box {
+            margin: 2rem 5%;
+            padding: 2rem;
+            text-align: center;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            margin-top: 1rem;
+        }
 
-        .full-mask {
+        /* 任务面板悬浮窗 */
+        .task-modal {
             position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px);
             z-index: 10000;
             display: none;
             align-items: center;
             justify-content: center;
         }
-        .full-mask.show {
+        .task-modal.show {
             display: flex;
         }
-        .full-content {
+        .task-card-pop {
+            background: #0f172a;
+            max-width: 450px;
             width: 90%;
-            max-width: 500px;
+            border-radius: 32px;
             padding: 2rem;
+            border: 1px solid #38bdf880;
         }
-        .close-icon {
-            float: right;
-            font-size: 28px;
+        .task-item {
+            background: rgba(255,255,255,0.05);
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 24px;
+        }
+        .floating-ai {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 55px;
+            height: 55px;
+            background: #38bdf8;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
             cursor: pointer;
+            box-shadow: 0 4px 20px rgba(56,189,248,0.5);
+            z-index: 99;
         }
 
         @keyframes gradientFlow {
             0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-        footer {
-            text-align: center;
-            padding: 2rem;
-            opacity: 0.7;
-        }
-        .ai-float-btn {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            width: 55px;
-            height: 55px;
-            background: #38bdf8;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        button {
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 0 15px #38bdf8;
-            z-index: 99;
         }
     </style>
 </head>
 <body>
 
 <nav class="glass">
-    <div class="logo">⚡重装上阵·经济纪元</div>
-    <div class="token-panel">
-        <div class="token-balance"><span>🎮 虚拟币</span> 💎 <span id="userBalance">0</span></div>
-        <button class="token-earn-btn" id="openTaskModalBtn">📋 赚币</button>
+    <div class="logo">⚡ 重装上阵 · 玩家社区</div>
+    <div class="coin-panel">
+        <div class="coin-balance">
+            💎 <span id="virtualCoinAmount">0</span> <small>晶核</small>
+        </div>
+        <button class="coin-btn" id="openTaskBtn">📋 赚币</button>
+        <button class="coin-btn coin-btn-outline" id="adminCoinBtn">🔑 卡密调额</button>
     </div>
     <div class="nav-links">
-        <a href="#adzone">广告位</a>
-        <a href="#tasks">任务</a>
-        <a href="#update">动态</a>
+        <a href="#">首页</a>
+        <a href="#features">社区</a>
+        <a href="#update">版本</a>
     </div>
 </nav>
 
 <section class="hero glass">
-    <h1>✦ 虚拟币广告位系统 ✦</h1>
-    <p>做任务赚虚拟币 → 消耗币租广告位 → 曝光你的内容/频道/创意</p>
+    <h1>欢迎来到重装上阵玩家社区</h1>
+    <p>虚拟币系统已上线 · 做任务赚晶核 · 输入卡密自由修改余额</p>
     <div class="btn-group">
-        <button class="btn btn-primary" id="viewRentalsBtn">📢 我的租赁</button>
-        <button class="btn btn-secondary" id="adminCardBtn">🔐 超级卡密 (管理员调额)</button>
+        <button class="btn btn-primary" onclick="alert('抖音群号：664859491263，快来加入吧！')">加入抖音群聊</button>
+        <button class="btn btn-secondary" id="checkMissionBtn">🎮 今日任务</button>
     </div>
+    <!-- 原有的卡密解锁区域（增强功能：同时可修改虚拟币） -->
     <div class="unlock-wrap glass">
-        <input type="text" class="unlock-input" id="adminCardInput" placeholder="输入超级卡密 修改任意用户虚拟币余额">
-        <button class="btn btn-primary" id="adminModifyBtn" style="width:100%;">🎛️ 执行授权修改</button>
-        <div id="adminResultMsg" style="margin-top:12px; font-size:0.8rem;"></div>
+        <input type="text" class="unlock-input" id="cardPwd" placeholder="输入卡密 (专属内容 / 管理调额)">
+        <button class="btn btn-primary" id="unlockBtn" style="width:100%;">立即解锁 / 使用卡密</button>
+        <div class="unlock-result" id="unlockRes"></div>
     </div>
 </section>
 
-<!-- 广告位区域 -->
-<section id="adzone" class="ad-slot-section">
-    <!-- 动态js生成3个广告位 -->
+<!-- 交友栏 + 悬赏令 (保留原有风格) -->
+<section class="common-box glass">
+    <h3>🎮 交友栏</h3>
+    <div class="common-list-wrap" id="friendList"></div>
+</section>
+<section class="common-box glass">
+    <h3>🏆 悬赏令</h3>
+    <div class="common-list-wrap" id="rewardList"></div>
 </section>
 
-<!-- 任务弹窗赚币 -->
-<div id="taskModal" class="full-mask">
-    <div class="full-content glass">
-        <span class="close-icon" onclick="closeTaskModal()">✖</span>
-        <h3 style="margin-bottom:1rem;">📌 每日任务 · 赚取虚拟币</h3>
-        <div id="taskListContainer"></div>
-        <button class="btn btn-secondary" style="margin-top:1rem; width:100%" onclick="closeTaskModal()">关闭</button>
+<section class="features" id="features">
+    <div class="card glass">
+        <h3>✦ 机甲分享</h3>
+        <p>上传创意蓝图，交流设计心得，让你的作品闪耀社区。</p>
+        <button class="btn btn-secondary" onclick="alert('前往抖音群分享你的机甲！')">立即分享</button>
     </div>
-</div>
-
-<!-- 我的租赁列表弹窗 -->
-<div id="rentalModal" class="full-mask">
-    <div class="full-content glass">
-        <span class="close-icon" onclick="closeRentalModal()">✖</span>
-        <h3>📋 我的广告位租赁记录</h3>
-        <div id="myRentalsList" style="margin-top:1rem; max-height: 400px; overflow-y:auto;"></div>
+    <div class="card glass">
+        <h3>✦ 组队开黑</h3>
+        <p>寻找战友，一起排位，告别孤单对局。</p>
+        <button class="btn btn-secondary" onclick="alert('抖音群号：664859491263，组队开黑！')">寻找队友</button>
     </div>
-</div>
-
-<!-- 原有交友/悬赏简版 (保持社区感) -->
-<section class="glass" style="margin: 0 5% 1.5rem; padding: 1rem;">
-    <h3 style="text-align:center;">🎮 交友墙 · 悬赏令</h3>
-    <div style="display: flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
-        <div style="flex:1"><strong>👥 交友栏</strong><div id="simpleFriend">矽忈 | 3195953326<br>爱得去 | 3359527311</div></div>
-        <div style="flex:1"><strong>🏆 悬赏令</strong><div id="simpleReward">夜明|獃獃魚呀 | 1461657317<br>默默太普通弟 | 3297324323</div></div>
+    <div class="card glass">
+        <h3>✦ 战术交流</h3>
+        <p>分享打法、地图理解，共同进阶。</p>
+        <button class="btn btn-secondary" onclick="alert('战术交流区欢迎你！')">交流战术</button>
     </div>
-</section>
-
-<section class="features glass" id="tasks">
-    <h3>✨ 社区核心玩法 ✨</h3>
-    <p>虚拟币名称：<strong style="color:#facc15;">「重装晶核」</strong> | 用途：租赁广告位、解锁特权、社区投票</p>
-    <p>💡 每个广告位可自定义文字/图片链接，展现实力与创意！</p>
 </section>
 
 <section class="update-notice glass" id="update">
-    <h3>📢 经济系统更新公告</h3>
-    <div class="update-item">✅ 虚拟币系统上线：完成每日签到/邀请/观看广告获取晶核</div>
-    <div class="update-item">✅ 三大广告位招租：头部banner、侧边热区、底部推荐位</div>
-    <div class="update-item">✅ 超级卡密功能：输入特定卡密可自由修改当前账户虚拟币余额（管理员权限）</div>
+    <h3>📌 版本更新公告</h3>
+    <div class="update-item">✅ 2026.06 · 虚拟币系统重磅上线: 每日签到/观看广告/邀请好友赚晶核</div>
+    <div class="update-item">✅ 卡密系统强化: 输入管理卡密可自定义修改虚拟币余额</div>
+    <div class="update-item">✅ 保留原有玩家交友/悬赏令内容，社区氛围不变</div>
 </section>
 
-<footer>© 2026 重装上阵·元宇宙经济实验室 | 虚拟币广告位先驱</footer>
-<div class="ai-float-btn" onclick="alert('AI助理即将上线，当前版本专注虚拟币+广告经济')">🤖</div>
+<section class="author-box glass">
+    <h3>作者给大家的话</h3>
+    <div class="author-word">感谢每一位热爱重装上阵的伙伴，虚拟币经济让社区更有趣。<br>一起赚晶核，一起创造精彩！</div>
+</section>
+
+<footer>
+    <p>© 重装上阵玩家社区 · 虚拟币先锋版 | 抖音矽忈</p>
+</footer>
+
+<div class="floating-ai" onclick="alert('✨ AI小助手：当前虚拟币系统已激活，做任务或使用卡密即可获得晶核！')">
+    🤖
+</div>
+
+<!-- 任务弹窗 -->
+<div id="taskModal" class="task-modal">
+    <div class="task-card-pop">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+            <h3 style="color:#38bdf8;">📢 赚取晶核 · 每日任务</h3>
+            <button style="background:none; border:none; color:white; font-size:28px; cursor:pointer;" id="closeTaskModalBtn">&times;</button>
+        </div>
+        <div id="taskListContainer"></div>
+        <button class="btn btn-secondary" style="width:100%; margin-top:1rem;" id="closeTaskFooter">关闭</button>
+    </div>
+</div>
 
 <script>
-    // ------------------- 虚拟币系统核心存储 -------------------
-    let currentUser = "default_user";   // 单用户演示，实际可扩展多账户
-    // 存储结构： { balance: number, rentals: [{ slotId, startTime, endTime, adContent, cost }] }
-    let userDatabase = {
-        default_user: {
-            balance: 100,   // 初始赠送100虚拟币方便体验
-            rentals: []
+    // ======================= 虚拟币核心 (localStorage持久化) =======================
+    let userCoin = 0;
+    const COIN_KEY = 'astra_coin_balance';
+
+    function loadCoin() {
+        let saved = localStorage.getItem(COIN_KEY);
+        if(saved !== null && !isNaN(parseInt(saved))) {
+            userCoin = parseInt(saved);
+        } else {
+            userCoin = 120;  // 初始赠送120晶核，让新用户能直接体验
         }
-    };
-
-    // 广告位配置 (3个不同的广告位)
-    const adSlots = [
-        { id: "slot_top", name: "🔥 至尊头条位", pricePerDay: 80, description: "首页顶部黄金展位, 曝光率极高", defaultAd: "✨ 此广告位招租 — 联系社区管理" },
-        { id: "slot_mid", name: "🎯 机甲核心位", pricePerDay: 50, description: "内容区核心C位", defaultAd: "⚡ 广告位待租，展现你的战队/频道" },
-        { id: "slot_bottom", name: "🌟 荣耀推荐位", pricePerDay: 40, description: "底部推荐专区", defaultAd: "💎 让你的创意被所有人看见" }
-    ];
-
-    // 辅助函数: 保存数据到 localStorage (持久化)
-    function saveData() {
-        localStorage.setItem("tokenEcoSystem", JSON.stringify(userDatabase));
+        updateCoinUI();
     }
 
-    function loadData() {
-        const raw = localStorage.getItem("tokenEcoSystem");
-        if(raw) {
-            try {
-                const parsed = JSON.parse(raw);
-                if(parsed[currentUser]) userDatabase = parsed;
-                else userDatabase[currentUser] = { balance: 100, rentals: [] };
-            } catch(e) { console.warn(e); }
-        }
-        if(!userDatabase[currentUser]) userDatabase[currentUser] = { balance: 100, rentals: [] };
-        // 清理过期租赁 (自动过期逻辑)
-        let now = Date.now();
-        let user = userDatabase[currentUser];
-        if(user.rentals) {
-            user.rentals = user.rentals.filter(rent => rent.endTime > now);
-        } else user.rentals = [];
-        saveData();
+    function updateCoinUI() {
+        let span = document.getElementById('virtualCoinAmount');
+        if(span) span.innerText = userCoin;
+        localStorage.setItem(COIN_KEY, userCoin);
     }
 
-    function getCurrentUserData() {
-        if(!userDatabase[currentUser]) userDatabase[currentUser] = { balance: 100, rentals: [] };
-        // 再次清理过期
-        let now = Date.now();
-        userDatabase[currentUser].rentals = (userDatabase[currentUser].rentals || []).filter(r => r.endTime > now);
-        saveData();
-        return userDatabase[currentUser];
-    }
-
-    function updateBalanceUI() {
-        const bal = getCurrentUserData().balance;
-        document.getElementById("userBalance").innerText = bal;
-    }
-
-    // 修改余额 (核心)
-    function modifyBalance(amount, reason = "admin") {
-        let user = getCurrentUserData();
-        let newBalance = user.balance + amount;
+    // 修改余额 (正数为加，负数为减)
+    function modifyCoin(amount, reason = '') {
+        let newBalance = userCoin + amount;
         if(newBalance < 0) newBalance = 0;
-        user.balance = newBalance;
-        saveData();
-        updateBalanceUI();
-        renderAdSlots();   // 刷新广告位租赁状态
-        return newBalance;
+        userCoin = newBalance;
+        updateCoinUI();
+        if(reason) console.log(`[虚拟币] ${reason} : ${amount}`);
+        return userCoin;
     }
 
-    // 租赁广告位
-    function rentAdSlot(slotId, days, adContent) {
-        let user = getCurrentUserData();
-        const slot = adSlots.find(s => s.id === slotId);
-        if(!slot) return { success: false, msg: "广告位不存在" };
-        const totalCost = slot.pricePerDay * days;
-        if(user.balance < totalCost) return { success: false, msg: `虚拟币不足, 需要 ${totalCost} 晶核` };
-        if(!adContent || adContent.trim() === "") return { success: false, msg: "请填写广告内容 (文字或链接)" };
-        
-        // 检查是否已有未过期同位置租赁
-        const now = Date.now();
-        const existing = user.rentals.find(r => r.slotId === slotId && r.endTime > now);
-        if(existing) return { success: false, msg: "当前广告位已有未到期租赁，无法重复租用" };
-        
-        // 扣币
-        user.balance -= totalCost;
-        const newRental = {
-            slotId: slotId,
-            startTime: now,
-            endTime: now + days * 86400000,
-            adContent: adContent,
-            cost: totalCost,
-            days: days
-        };
-        user.rentals.push(newRental);
-        saveData();
-        updateBalanceUI();
-        renderAdSlots();
-        return { success: true, msg: `成功租赁 ${slot.name} ${days}天, 消费 ${totalCost} 晶核` };
-    }
-
-    // 渲染广告位 (展示当前租赁的内容)
-    function renderAdSlots() {
-        const container = document.getElementById("adzone");
-        if(!container) return;
-        let user = getCurrentUserData();
-        const now = Date.now();
-        let activeRentals = user.rentals.filter(r => r.endTime > now);
-        
-        let html = "";
-        adSlots.forEach(slot => {
-            const active = activeRentals.find(r => r.slotId === slot.id);
-            let displayContent = slot.defaultAd;
-            let isRented = false;
-            let renterInfo = "";
-            if(active) {
-                displayContent = active.adContent;
-                isRented = true;
-                const expireDate = new Date(active.endTime).toLocaleString();
-                renterInfo = `<div style="font-size:11px; margin-top:5px; color:#aaa;">✅ 已租赁 | 到期: ${expireDate}</div>`;
-            }
-            html += `
-                <div class="ad-card glass">
-                    <div class="ad-header">
-                        <strong>${slot.name}</strong>
-                        <span class="ad-price">💰 ${slot.pricePerDay} 晶核/天</span>
-                    </div>
-                    <div class="ad-content">
-                        ${isRented ? `<div style="background:#0f172a80; padding:8px; border-radius:12px;">📢 广告内容：<br>${displayContent}</div>` : `<div class="empty-ad">✨ ${slot.defaultAd}</div>`}
-                        ${renterInfo}
-                    </div>
-                    <div style="display: flex; gap: 10px; margin-top: 8px;">
-                        <input type="text" id="adInput_${slot.id}" placeholder="输入广告词/链接" style="flex:1; background:#1e293b; border:1px solid #3b4a6b; border-radius:30px; padding:6px 12px; color:white;">
-                        <input type="number" id="daysInput_${slot.id}" value="1" min="1" max="30" style="width:70px; background:#1e293b; border-radius:30px; text-align:center; color:white;">
-                        <button class="rent-btn" onclick="attemptRent('${slot.id}')">租赁</button>
-                    </div>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
-
-    window.attemptRent = function(slotId) {
-        const daysInput = document.getElementById(`daysInput_${slotId}`);
-        const adInput = document.getElementById(`adInput_${slotId}`);
-        let days = parseInt(daysInput.value);
-        if(isNaN(days) || days < 1) days = 1;
-        if(days > 30) days = 30;
-        let adContent = adInput.value.trim();
-        if(adContent === "") {
-            alert("广告内容不能为空，请输入你的推广文字/链接");
-            return;
+    // 通用任务检测 & 冷却 (基于localStorage)
+    function canDoTask(taskId, limitPerDay = 1, reward = 0) {
+        const today = new Date().toDateString();
+        const storageKey = `task_${taskId}_${today}`;
+        let countDone = parseInt(localStorage.getItem(storageKey) || '0');
+        if(countDone >= limitPerDay) {
+            return { ok: false, remaining: 0 };
         }
-        const result = rentAdSlot(slotId, days, adContent);
-        alert(result.msg);
-        if(result.success) {
-            adInput.value = "";
-            daysInput.value = "1";
-        }
+        return { ok: true, remaining: limitPerDay - countDone };
     }
 
-    // 显示我的租赁
-    function showMyRentals() {
-        let user = getCurrentUserData();
-        let active = user.rentals.filter(r => r.endTime > Date.now());
-        if(active.length === 0) {
-            document.getElementById("myRentalsList").innerHTML = "<div class='empty-ad'>暂无租赁记录，快去租个广告位展示内容吧！</div>";
-        } else {
-            let listHtml = "";
-            active.forEach(rent => {
-                const slot = adSlots.find(s => s.id === rent.slotId);
-                const slotName = slot ? slot.name : rent.slotId;
-                const expireDate = new Date(rent.endTime).toLocaleString();
-                listHtml += `<div class="glass" style="padding:12px; margin-bottom:12px;">
-                                <strong>📌 ${slotName}</strong><br>
-                                广告内容：${rent.adContent}<br>
-                                剩余有效期至 ${expireDate}<br>
-                                花费 ${rent.cost} 晶核
-                            </div>`;
-            });
-            document.getElementById("myRentalsList").innerHTML = listHtml;
-        }
-        document.getElementById("rentalModal").classList.add("show");
+    function recordTask(taskId) {
+        const today = new Date().toDateString();
+        const storageKey = `task_${taskId}_${today}`;
+        let current = parseInt(localStorage.getItem(storageKey) || '0');
+        localStorage.setItem(storageKey, current + 1);
     }
 
-    // ---------- 任务赚币模块 ----------
-    const tasks = [
-        { id: "sign", name: "✅ 每日签到", reward: 20, cooldownKey: "lastSign", desc: "每日限领一次，轻松得20晶核" },
-        { id: "watchAd", name: "📺 观看宣传片", reward: 15, cooldownKey: "lastWatchAd", desc: "每日可完成3次，每次15晶核", maxDaily: 3 },
-        { id: "shareCommunity", name: "🤝 邀请好友 (虚拟)", reward: 50, cooldownKey: "lastInvite", desc: "点击模拟邀请，得50晶核 (每日1次)" }
-    ];
-    
-    function canDoTask(taskId) {
-        const key = `task_${currentUser}_${taskId}`;
-        const data = localStorage.getItem(key);
-        if(!data) return { ok: true, remaining: 1 };
-        try {
-            const record = JSON.parse(data);
-            const last = record.lastTimestamp;
-            const today = new Date().toDateString();
-            const lastDay = last ? new Date(last).toDateString() : null;
-            if(taskId === "watchAd") {
-                let countToday = record.countToday || 0;
-                if(lastDay === today && countToday >= 3) return { ok: false, remaining: 0 };
-                return { ok: true, remaining: 3 - (lastDay === today ? countToday : 0) };
-            }
-            if(taskId === "sign" || taskId === "shareCommunity") {
-                if(lastDay === today) return { ok: false, remaining: 0 };
-                return { ok: true, remaining: 1 };
-            }
-        } catch(e) {}
-        return { ok: true, remaining: 1 };
-    }
-    
-    function recordTaskDone(taskId) {
-        const key = `task_${currentUser}_${taskId}`;
-        let record = { lastTimestamp: Date.now() };
-        if(taskId === "watchAd") {
-            let existing = localStorage.getItem(key);
-            let prev = existing ? JSON.parse(existing) : {};
-            let count = (prev.lastTimestamp && new Date(prev.lastTimestamp).toDateString() === new Date().toDateString()) ? (prev.countToday || 0) : 0;
-            record.countToday = count + 1;
-            record.lastTimestamp = Date.now();
-        } else {
-            record.lastTimestamp = Date.now();
-        }
-        localStorage.setItem(key, JSON.stringify(record));
-    }
-    
-    function doTask(taskId, reward) {
-        const status = canDoTask(taskId);
-        if(!status.ok) {
-            alert(`今日已完成该任务 (剩余次数: ${status.remaining})`);
+    // 任务1: 每日签到 +20
+    function dailySign() {
+        let check = canDoTask('dailySign', 1, 20);
+        if(!check.ok) {
+            alert('今日已经签到过了，明日再来吧～');
             return false;
         }
-        modifyBalance(reward, `完成 ${taskId} 任务`);
-        recordTaskDone(taskId);
-        alert(`+${reward} 晶核！当前余额: ${getCurrentUserData().balance}`);
-        renderTaskListModal(); // 刷新弹窗内任务按钮状态
+        modifyCoin(20, '每日签到');
+        recordTask('dailySign');
+        alert('✅ 签到成功！获得 20 晶核');
+        renderTaskModal(); // 刷新任务面板
         return true;
     }
-    
-    function renderTaskListModal() {
-        const container = document.getElementById("taskListContainer");
+
+    // 任务2: 观看广告 (模拟，每日最多3次，每次+10)
+    function watchAdTask() {
+        let check = canDoTask('watchAd', 3, 10);
+        if(!check.ok) {
+            alert(`今日已完成 ${3 - check.remaining} 次广告，已达上限。`);
+            return false;
+        }
+        modifyCoin(10, '观看广告');
+        recordTask('watchAd');
+        alert('📺 感谢观看，获得 10 晶核');
+        renderTaskModal();
+        return true;
+    }
+
+    // 任务3: 邀请好友模拟 (每日1次 +40)
+    function inviteFriend() {
+        let check = canDoTask('inviteFriend', 1, 40);
+        if(!check.ok) {
+            alert('今日已邀请过好友(模拟)，明天再来吧');
+            return false;
+        }
+        modifyCoin(40, '邀请好友');
+        recordTask('inviteFriend');
+        alert('🤝 邀请成功！ +40 晶核');
+        renderTaskModal();
+        return true;
+    }
+
+    // 渲染任务弹窗内容
+    function renderTaskModal() {
+        const container = document.getElementById('taskListContainer');
         if(!container) return;
-        let html = "";
-        tasks.forEach(task => {
-            const status = canDoTask(task.id);
-            let btnDisabled = !status.ok;
-            let btnText = status.ok ? `领取 +${task.reward}` : `已冷却 (剩余${status.remaining}次)`;
+        const tasks = [
+            { name: '📅 每日签到', desc: '轻轻一点，+20晶核 (每日1次)', reward: 20, handler: dailySign, taskId: 'dailySign', limit:1 },
+            { name: '📺 观看社区宣传', desc: '每日最多3次，每次+10晶核', reward: 10, handler: watchAdTask, taskId: 'watchAd', limit:3 },
+            { name: '👥 邀请战友', desc: '模拟邀请好友，+40晶核 (每日1次)', reward: 40, handler: inviteFriend, taskId: 'inviteFriend', limit:1 }
+        ];
+        let html = '';
+        tasks.forEach(t => {
+            const status = canDoTask(t.taskId, t.limit);
+            const isDisabled = !status.ok;
+            let buttonText = isDisabled ? `✅ 已完成 (今日${t.limit - status.remaining}/${t.limit})` : `🎁 领取 +${t.reward}`;
             html += `
-                <div class="task-card glass" style="margin-bottom:12px;">
-                    <strong>${task.name}</strong><br>
-                    <small>${task.desc}</small><br>
-                    <button class="task-btn" onclick="doTask('${task.id}', ${task.reward})" ${btnDisabled ? "disabled style='opacity:0.5'" : ""}>${btnText}</button>
+                <div class="task-item">
+                    <strong>${t.name}</strong><br>
+                    <small style="color:#94a3b8">${t.desc}</small><br>
+                    <button class="btn btn-primary" style="margin-top:12px; width:100%;" 
+                        onclick="(${t.handler.toString()})()" ${isDisabled ? 'disabled style="opacity:0.5"' : ''}>
+                        ${buttonText}
+                    </button>
                 </div>
             `;
         });
         container.innerHTML = html;
     }
-    
+
     function openTaskModal() {
-        renderTaskListModal();
-        document.getElementById("taskModal").classList.add("show");
+        renderTaskModal();
+        document.getElementById('taskModal').classList.add('show');
     }
-    function closeTaskModal() { document.getElementById("taskModal").classList.remove("show"); }
-    function closeRentalModal() { document.getElementById("rentalModal").classList.remove("show"); }
+    function closeTaskModal() {
+        document.getElementById('taskModal').classList.remove('show');
+    }
+
+    // ========== 原有卡密系统增强 + 虚拟币修改功能（超级牛逼）==========
+    // 保留原本卡密: "astracraftnb666" 显示专属内容
+    // 额外增加管理卡密: "supercoin2026" 可自由修改虚拟币数量
+    const ORIGINAL_CARD = "astracraftnb666";      // 原内容解锁卡密
+    const ADMIN_COIN_CARD = "astracraftnb666";      // 管理调额卡密（可自定义）
     
-    // ---------- 超级卡密：自由修改虚拟币数量 ----------
-    // 超级卡密 (通用授权密钥)
-    const SUPER_CARD_KEY = "ASTRACRAFT-VIP-2026";
-    
-    function adminModifyBalance() {
-        const inputVal = document.getElementById("adminCardInput").value.trim();
-        if(!inputVal) {
-            document.getElementById("adminResultMsg").innerHTML = "<span style='color:#f87171;'>❌ 请输入卡密及金额</span>";
-            return;
-        }
-        // 卡密格式支持: 完整卡密: "ASTRACRAFT-VIP-2026|+500" 或 "ASTRACRAFT-VIP-2026|-200" , 也可纯卡密直接修改 +200 示例，更加自由: 设计为 卡密+空格+数字
-        // 为了更符合要求: 输入卡密例如 "ASTRACRAFT-VIP-2026 +300" 或 "ASTRACRAFT-VIP-2026 -50"
-        let parts = inputVal.split(/\s+/);
-        let cardCode = parts[0];
-        let amountStr = parts[1];
+    // 新版卡密处理器（完全替换之前逻辑，同时兼容两种）
+    window.handleCardSystem = function() {
+        const inputVal = document.getElementById('cardPwd').value.trim();
+        const resBox = document.getElementById('unlockRes');
         
-        if(cardCode !== SUPER_CARD_KEY) {
-            document.getElementById("adminResultMsg").innerHTML = "<span style='color:#f87171;'>❌ 超级卡密错误！无授权修改余额</span>";
+        // 情况1：原卡密 -> 展示专属内容
+        if(inputVal === ORIGINAL_CARD) {
+            resBox.className = "unlock-result glass success-text";
+            resBox.innerHTML = `✅ 卡密验证成功！解锁专属内容<br>
+            🔹 虚拟币系统已激活，当前晶核: ${userCoin}<br>
+            🔹 专属社区特权：后续版本优先体验<br>
+            🔹 感谢支持重装上阵！`;
+            resBox.style.display = "block";
+            // 额外赠送小彩蛋 +20 晶核 (仅首次)
+            let bonusGiven = localStorage.getItem('cardBonusGiven');
+            if(!bonusGiven) {
+                modifyCoin(30, '专属卡密福利彩蛋');
+                localStorage.setItem('cardBonusGiven', 'true');
+                resBox.innerHTML += `<br><span style="color:#facc15;">✨ 彩蛋触发！额外赠送 30 晶核～</span>`;
+            }
             return;
         }
-        if(!amountStr) {
-            document.getElementById("adminResultMsg").innerHTML = "<span style='color:#facc15;'>⚠️ 请在卡密后输入数额，例如: +300 或 -100</span>";
+        
+        // 情况2：管理调额卡密 -> 弹出窗口自由修改虚拟币数量 (真·牛逼)
+        if(inputVal === ADMIN_COIN_CARD) {
+            let action = prompt("⚡ 管理员卡密验证通过！\n请输入修改数量：\n正数增加（例如 500）\n负数减少（例如 -200）\n可直接调整虚拟币余额。");
+            if(action !== null) {
+                let amount = Number(action);
+                if(isNaN(amount)) {
+                    resBox.className = "unlock-result glass error-text";
+                    resBox.innerHTML = "❌ 输入错误，必须为数字！";
+                    resBox.style.display = "block";
+                    return;
+                }
+                let newBal = modifyCoin(amount, '超级卡密调额');
+                resBox.className = "unlock-result glass success-text";
+                resBox.innerHTML = `🎉 超级授权成功！虚拟币变动 ${amount>=0 ? `+${amount}` : amount} 晶核<br>💰 当前余额: ${newBal} 晶核`;
+                resBox.style.display = "block";
+                // 额外记录炫耀一下
+                setTimeout(() => {
+                    let msgDiv = document.getElementById('unlockRes');
+                    if(msgDiv) setTimeout(() => { if(msgDiv.style.display !== 'none') msgDiv.style.display = 'none'; }, 4000);
+                }, 3500);
+            }
             return;
         }
-        let amount = parseInt(amountStr);
-        if(isNaN(amount)) {
-            document.getElementById("adminResultMsg").innerHTML = "<span style='color:#f87171;'>❌ 数额必须为数字，正数增加负数减少</span>";
-            return;
-        }
-        const newBal = modifyBalance(amount, "超级管理员调额");
-        document.getElementById("adminResultMsg").innerHTML = `<span style='color:#4ade80;'>✅ 授权成功！虚拟币变动 ${amount>=0?`+${amount}`:amount}，当前余额: ${newBal} 晶核</span>`;
-        document.getElementById("adminCardInput").value = "";
-        setTimeout(()=>{document.getElementById("adminResultMsg").innerHTML = "";}, 4000);
-    }
-    
-    // 页面初始化和事件绑定
-    window.onload = () => {
-        loadData();
-        updateBalanceUI();
-        renderAdSlots();
-        document.getElementById("openTaskModalBtn").onclick = openTaskModal;
-        document.getElementById("viewRentalsBtn").onclick = showMyRentals;
-        document.getElementById("adminModifyBtn").onclick = adminModifyBalance;
-        document.getElementById("adminCardBtn").onclick = () => {
-            alert("超级卡密: ASTRACRAFT-VIP-2026\n使用方法: 在输入框内输入『卡密 + 空格 + 增减数值』\n例如：ASTRACRAFT-VIP-2026 +500  增加500币\n例如：ASTRACRAFT-VIP-2026 -200  减少200币");
-        };
-        // 简易交友数据不动
+        
+        // 卡密错误
+        resBox.className = "unlock-result glass error-text";
+        resBox.innerHTML = "❌ 卡密无效，无权限操作！";
+        resBox.style.display = "block";
     };
     
-    // 附加：全局关闭弹窗点击mask
-    window.onclick = function(e) {
-        if(e.target.classList && e.target.classList.contains('full-mask')) {
-            e.target.classList.remove('show');
+    // 给按钮绑定事件 (同时保留原有交互)
+    document.addEventListener('DOMContentLoaded', () => {
+        loadCoin();
+        
+        // 绑定解锁按钮
+        const unlockBtn = document.getElementById('unlockBtn');
+        if(unlockBtn) unlockBtn.onclick = () => window.handleCardSystem();
+        
+        // 绑定任务相关
+        const openBtn = document.getElementById('openTaskBtn');
+        if(openBtn) openBtn.onclick = openTaskModal;
+        const checkMissionBtn = document.getElementById('checkMissionBtn');
+        if(checkMissionBtn) checkMissionBtn.onclick = openTaskModal;
+        const closeModalBtn = document.getElementById('closeTaskModalBtn');
+        if(closeModalBtn) closeModalBtn.onclick = closeTaskModal;
+        const closeFooter = document.getElementById('closeTaskFooter');
+        if(closeFooter) closeFooter.onclick = closeTaskModal;
+        
+        // 点击遮罩关闭弹窗
+        const modal = document.getElementById('taskModal');
+        if(modal) modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeTaskModal();
+        });
+        
+        // 管理调额快捷按钮（右上角那个卡密调额按钮）
+        const adminCoinBtn = document.getElementById('adminCoinBtn');
+        if(adminCoinBtn) {
+            adminCoinBtn.onclick = () => {
+                let customCard = prompt("🔐 请输入管理调额卡密（超级卡密: supercoin2026）");
+                if(customCard === ADMIN_COIN_CARD) {
+                    let amount = prompt("授权通过！输入晶核变动数量 (正数增加，负数减少):");
+                    if(amount !== null && !isNaN(Number(amount))) {
+                        let newVal = modifyCoin(Number(amount), '快捷面板调额');
+                        alert(`✅ 调整成功！当前晶核: ${newVal}`);
+                    } else if(amount !== null) alert("无效的数字");
+                } else if(customCard !== null && customCard !== "") {
+                    alert("❌ 管理卡密错误，无法调额");
+                }
+            };
         }
-    }
+        
+        // 填充交友栏和悬赏令 (原样风格)
+        const friendData = [
+            { douyin:"矽忈", gameName:"矽忈", code:"3195953326" },
+            { douyin:"3ooy1415", gameName:"爱得去", code:"3359527311" }
+        ];
+        const rewardData = [
+            { gameName:"夜明|獃獃魚呀", code:"1461657317" },
+            { gameName:"默默太普通弟", code:"3297324323" }
+        ];
+        let friendHtml = '';
+        friendData.forEach(f => {
+            friendHtml += `<div class="common-line">🎮 抖音: ${f.douyin} ｜ 重装: ${f.gameName} ｜ 编号: ${f.code}</div>`;
+        });
+        document.getElementById('friendList').innerHTML = friendHtml;
+        
+        let rewardHtml = '';
+        rewardData.forEach(r => {
+            rewardHtml += `<div class="common-line">🏅 悬赏令 · ${r.gameName} ｜ 编号: ${r.code}</div>`;
+        });
+        document.getElementById('rewardList').innerHTML = rewardHtml;
+        
+        // 展示初始余额
+        updateCoinUI();
+    });
+    
+    // 暴露全局函数以供任务按钮直接调用
+    window.dailySign = dailySign;
+    window.watchAdTask = watchAdTask;
+    window.inviteFriend = inviteFriend;
+    window.openTaskModal = openTaskModal;
+    window.closeTaskModal = closeTaskModal;
+    window.modifyCoin = modifyCoin;
 </script>
 </body>
 </html>
