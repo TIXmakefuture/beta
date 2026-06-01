@@ -1,660 +1,105 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>重装上阵 · 玩家社区 | 虚拟币系统</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #0a101f 0%, #16213e 50%, #0f172a 100%);
-            background-size: 400% 400%;
-            animation: gradientFlow 15s ease infinite;
-            color: #e2e8f0;
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding: 1rem;
-        }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 24px;
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 10px 36px rgba(0, 0, 0, 0.25);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            position: sticky;
-            top: 1rem;
-            z-index: 999;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #38bdf8;
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.2);
-        }
-
-        /* 虚拟币面板 - 高端嵌入 */
-        .coin-panel {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(12px);
-            padding: 0.4rem 1rem 0.4rem 1.5rem;
-            border-radius: 60px;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-        .coin-balance {
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: #facc15;
-            letter-spacing: 1px;
-        }
-        .coin-balance small {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            font-weight: normal;
-        }
-        .coin-btn {
-            background: #38bdf8;
-            border: none;
-            padding: 0.4rem 1rem;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            color: #0f172a;
-        }
-        .coin-btn-outline {
-            background: transparent;
-            border: 1px solid #38bdf8;
-            color: #38bdf8;
-        }
-
-        .nav-links a {
-            color: #cbd5e1;
-            text-decoration: none;
-            margin-left: 1.8rem;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            border-bottom: 2px solid transparent;
-        }
-        .nav-links a:hover {
-            color: #38bdf8;
-            border-bottom: 2px solid #38bdf8;
-        }
-
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem 2rem;
-            margin-bottom: 2rem;
-        }
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(135deg, #ffffff, #38bdf8);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: #94a3b8;
-            max-width: 650px;
-            margin-bottom: 2rem;
-        }
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        .btn {
-            padding: 0.8rem 2rem;
-            border-radius: 40px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.2s;
-            cursor: pointer;
-            border: none;
-            font-size: 0.95rem;
-        }
-        .btn-primary {
-            background: #38bdf8;
-            color: #0f172a;
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
-        }
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.08);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.6);
-        }
-        .btn-secondary:hover, .btn-primary:hover {
-            transform: translateY(-3px);
-        }
-
-        .unlock-wrap {
-            width: 100%;
-            max-width: 420px;
-            margin-top: 0.5rem;
-            padding: 1.8rem;
-        }
-        .unlock-input {
-            width: 100%;
-            padding: 12px 18px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 60px;
-            color: #e2e8f0;
-            font-size: 1rem;
-            outline: none;
-            margin-bottom: 1rem;
-        }
-        .unlock-result {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 20px;
-            display: none;
-            font-size: 0.9rem;
-        }
-        .success-text { color: #38bdf8; background: rgba(56,189,248,0.1); }
-        .error-text { color: #f87171; background: rgba(248,113,113,0.1); }
-
-        /* 公用卡片区 */
-        .common-box {
-            margin: 0 5% 1.5rem;
-            padding: 1.5rem;
-        }
-        .common-box h3 {
-            color: #94a3b8;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        .common-list-wrap {
-            max-height: 200px;
-            overflow-y: auto;
-            padding-right: 0.5rem;
-        }
-        .common-line {
-            padding: 0.7rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 1rem 5% 3rem;
-        }
-        .card {
-            padding: 2rem;
-            transition: 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,0.1);
-        }
-        .card h3 {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .update-notice {
-            margin: 1.5rem 5%;
-            padding: 2rem;
-        }
-        .update-item {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-        .author-box {
-            margin: 2rem 5%;
-            padding: 2rem;
-            text-align: center;
-        }
-        footer {
-            text-align: center;
-            padding: 2rem;
-            color: #64748b;
-            margin-top: 1rem;
-        }
-
-        /* 任务面板悬浮窗 */
-        .task-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(12px);
-            z-index: 10000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        .task-modal.show {
-            display: flex;
-        }
-        .task-card-pop {
-            background: #0f172a;
-            max-width: 450px;
-            width: 90%;
-            border-radius: 32px;
-            padding: 2rem;
-            border: 1px solid #38bdf880;
-        }
-        .task-item {
-            background: rgba(255,255,255,0.05);
-            margin: 1rem 0;
-            padding: 1rem;
-            border-radius: 24px;
-        }
-        .floating-ai {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 55px;
-            height: 55px;
-            background: #38bdf8;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(56,189,248,0.5);
-            z-index: 99;
-        }
-
-        @keyframes gradientFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        button {
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-
-<nav class="glass">
-    <div class="logo">⚡ 重装上阵 · 玩家社区</div>
-    <div class="coin-panel">
-        <div class="coin-balance">
-            💎 <span id="virtualCoinAmount">0</span> <small>晶核</small>
-        </div>
-        <button class="coin-btn" id="openTaskBtn">📋 赚币</button>
-        <button class="coin-btn coin-btn-outline" id="adminCoinBtn">🔑 卡密调额</button>
-    </div>
-    <div class="nav-links">
-        <a href="#">首页</a>
-        <a href="#features">社区</a>
-        <a href="#update">版本</a>
-    </div>
-</nav>
-
-<section class="hero glass">
-    <h1>欢迎来到重装上阵玩家社区</h1>
-    <p>虚拟币系统已上线 · 做任务赚晶核 · 输入卡密自由修改余额</p>
-    <div class="btn-group">
-        <button class="btn btn-primary" onclick="alert('抖音群号：664859491263，快来加入吧！')">加入抖音群聊</button>
-        <button class="btn btn-secondary" id="checkMissionBtn">🎮 今日任务</button>
-    </div>
-    <!-- 原有的卡密解锁区域（增强功能：同时可修改虚拟币） -->
-    <div class="unlock-wrap glass">
-        <input type="text" class="unlock-input" id="cardPwd" placeholder="输入卡密 (专属内容 / 管理调额)">
-        <button class="btn btn-primary" id="unlockBtn" style="width:100%;">立即解锁 / 使用卡密</button>
-        <div class="unlock-result" id="unlockRes"></div>
-    </div>
-</section>
-
-<!-- 交友栏 + 悬赏令 (保留原有风格) -->
-<section class="common-box glass">
-    <h3>🎮 交友栏</h3>
-    <div class="common-list-wrap" id="friendList"></div>
-</section>
-<section class="common-box glass">
-    <h3>🏆 悬赏令</h3>
-    <div class="common-list-wrap" id="rewardList"></div>
-</section>
-
-<section class="features" id="features">
-    <div class="card glass">
-        <h3>✦ 机甲分享</h3>
-        <p>上传创意蓝图，交流设计心得，让你的作品闪耀社区。</p>
-        <button class="btn btn-secondary" onclick="alert('前往抖音群分享你的机甲！')">立即分享</button>
-    </div>
-    <div class="card glass">
-        <h3>✦ 组队开黑</h3>
-        <p>寻找战友，一起排位，告别孤单对局。</p>
-        <button class="btn btn-secondary" onclick="alert('抖音群号：664859491263，组队开黑！')">寻找队友</button>
-    </div>
-    <div class="card glass">
-        <h3>✦ 战术交流</h3>
-        <p>分享打法、地图理解，共同进阶。</p>
-        <button class="btn btn-secondary" onclick="alert('战术交流区欢迎你！')">交流战术</button>
-    </div>
-</section>
-
-<section class="update-notice glass" id="update">
-    <h3>📌 版本更新公告</h3>
-    <div class="update-item">✅ 2026.06 · 虚拟币系统重磅上线: 每日签到/观看广告/邀请好友赚晶核</div>
-    <div class="update-item">✅ 卡密系统强化: 输入管理卡密可自定义修改虚拟币余额</div>
-    <div class="update-item">✅ 保留原有玩家交友/悬赏令内容，社区氛围不变</div>
-</section>
-
-<section class="author-box glass">
-    <h3>作者给大家的话</h3>
-    <div class="author-word">感谢每一位热爱重装上阵的伙伴，虚拟币经济让社区更有趣。<br>一起赚晶核，一起创造精彩！</div>
-</section>
-
-<footer>
-    <p>© 重装上阵玩家社区 · 虚拟币先锋版 | 抖音矽忈</p>
-</footer>
-
-<div class="floating-ai" onclick="alert('✨ AI小助手：当前虚拟币系统已激活，做任务或使用卡密即可获得晶核！')">
-    🤖
-</div>
-
-<!-- 任务弹窗 -->
-<div id="taskModal" class="task-modal">
-    <div class="task-card-pop">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-            <h3 style="color:#38bdf8;">📢 赚取晶核 · 每日任务</h3>
-            <button style="background:none; border:none; color:white; font-size:28px; cursor:pointer;" id="closeTaskModalBtn">&times;</button>
-        </div>
-        <div id="taskListContainer"></div>
-        <button class="btn btn-secondary" style="width:100%; margin-top:1rem;" id="closeTaskFooter">关闭</button>
-    </div>
-</div>
-
+<!-- ========== 虚拟币系统 + 卡密修改余额（仅添加，不改动原界面） ========== -->
 <script>
-    // ======================= 虚拟币核心 (localStorage持久化) =======================
-    let userCoin = 0;
-    const COIN_KEY = 'astra_coin_balance';
-
-    function loadCoin() {
-        let saved = localStorage.getItem(COIN_KEY);
-        if(saved !== null && !isNaN(parseInt(saved))) {
-            userCoin = parseInt(saved);
-        } else {
-            userCoin = 120;  // 初始赠送120晶核，让新用户能直接体验
-        }
-        updateCoinUI();
+(function() {
+    // 虚拟币存储
+    let crystalCoin = localStorage.getItem('crystalCoin') ? parseInt(localStorage.getItem('crystalCoin')) : 0;
+    
+    // 在导航栏右侧添加虚拟币显示面板（不破坏原结构）
+    function addCoinPanel() {
+        let nav = document.querySelector('nav');
+        if (!nav) return;
+        // 检查是否已添加过
+        if (document.getElementById('coinPanelWidget')) return;
+        let coinPanel = document.createElement('div');
+        coinPanel.id = 'coinPanelWidget';
+        coinPanel.style.cssText = 'display:flex; align-items:center; gap:12px; background:rgba(0,0,0,0.4); padding:6px 16px; border-radius:40px; backdrop-filter:blur(8px);';
+        coinPanel.innerHTML = `
+            <span style="color:#facc15; font-weight:bold;">💎 晶核: <span id="crystalAmount">${crystalCoin}</span></span>
+            <button id="dailySignBtn" style="background:#38bdf8; border:none; padding:4px 14px; border-radius:30px; font-weight:bold; cursor:pointer; color:#0f172a;">📅 签到</button>
+        `;
+        nav.appendChild(coinPanel);
     }
-
-    function updateCoinUI() {
-        let span = document.getElementById('virtualCoinAmount');
-        if(span) span.innerText = userCoin;
-        localStorage.setItem(COIN_KEY, userCoin);
+    
+    // 更新显示
+    function updateCoinDisplay() {
+        let span = document.getElementById('crystalAmount');
+        if (span) span.innerText = crystalCoin;
+        localStorage.setItem('crystalCoin', crystalCoin);
     }
-
-    // 修改余额 (正数为加，负数为减)
-    function modifyCoin(amount, reason = '') {
-        let newBalance = userCoin + amount;
-        if(newBalance < 0) newBalance = 0;
-        userCoin = newBalance;
-        updateCoinUI();
-        if(reason) console.log(`[虚拟币] ${reason} : ${amount}`);
-        return userCoin;
+    
+    // 修改晶核数量
+    function modifyCrystal(amount) {
+        let newAmount = crystalCoin + amount;
+        if (newAmount < 0) newAmount = 0;
+        crystalCoin = newAmount;
+        updateCoinDisplay();
+        return crystalCoin;
     }
-
-    // 通用任务检测 & 冷却 (基于localStorage)
-    function canDoTask(taskId, limitPerDay = 1, reward = 0) {
-        const today = new Date().toDateString();
-        const storageKey = `task_${taskId}_${today}`;
-        let countDone = parseInt(localStorage.getItem(storageKey) || '0');
-        if(countDone >= limitPerDay) {
-            return { ok: false, remaining: 0 };
-        }
-        return { ok: true, remaining: limitPerDay - countDone };
-    }
-
-    function recordTask(taskId) {
-        const today = new Date().toDateString();
-        const storageKey = `task_${taskId}_${today}`;
-        let current = parseInt(localStorage.getItem(storageKey) || '0');
-        localStorage.setItem(storageKey, current + 1);
-    }
-
-    // 任务1: 每日签到 +20
+    
+    // 每日签到
     function dailySign() {
-        let check = canDoTask('dailySign', 1, 20);
-        if(!check.ok) {
-            alert('今日已经签到过了，明日再来吧～');
-            return false;
-        }
-        modifyCoin(20, '每日签到');
-        recordTask('dailySign');
-        alert('✅ 签到成功！获得 20 晶核');
-        renderTaskModal(); // 刷新任务面板
-        return true;
-    }
-
-    // 任务2: 观看广告 (模拟，每日最多3次，每次+10)
-    function watchAdTask() {
-        let check = canDoTask('watchAd', 3, 10);
-        if(!check.ok) {
-            alert(`今日已完成 ${3 - check.remaining} 次广告，已达上限。`);
-            return false;
-        }
-        modifyCoin(10, '观看广告');
-        recordTask('watchAd');
-        alert('📺 感谢观看，获得 10 晶核');
-        renderTaskModal();
-        return true;
-    }
-
-    // 任务3: 邀请好友模拟 (每日1次 +40)
-    function inviteFriend() {
-        let check = canDoTask('inviteFriend', 1, 40);
-        if(!check.ok) {
-            alert('今日已邀请过好友(模拟)，明天再来吧');
-            return false;
-        }
-        modifyCoin(40, '邀请好友');
-        recordTask('inviteFriend');
-        alert('🤝 邀请成功！ +40 晶核');
-        renderTaskModal();
-        return true;
-    }
-
-    // 渲染任务弹窗内容
-    function renderTaskModal() {
-        const container = document.getElementById('taskListContainer');
-        if(!container) return;
-        const tasks = [
-            { name: '📅 每日签到', desc: '轻轻一点，+20晶核 (每日1次)', reward: 20, handler: dailySign, taskId: 'dailySign', limit:1 },
-            { name: '📺 观看社区宣传', desc: '每日最多3次，每次+10晶核', reward: 10, handler: watchAdTask, taskId: 'watchAd', limit:3 },
-            { name: '👥 邀请战友', desc: '模拟邀请好友，+40晶核 (每日1次)', reward: 40, handler: inviteFriend, taskId: 'inviteFriend', limit:1 }
-        ];
-        let html = '';
-        tasks.forEach(t => {
-            const status = canDoTask(t.taskId, t.limit);
-            const isDisabled = !status.ok;
-            let buttonText = isDisabled ? `✅ 已完成 (今日${t.limit - status.remaining}/${t.limit})` : `🎁 领取 +${t.reward}`;
-            html += `
-                <div class="task-item">
-                    <strong>${t.name}</strong><br>
-                    <small style="color:#94a3b8">${t.desc}</small><br>
-                    <button class="btn btn-primary" style="margin-top:12px; width:100%;" 
-                        onclick="(${t.handler.toString()})()" ${isDisabled ? 'disabled style="opacity:0.5"' : ''}>
-                        ${buttonText}
-                    </button>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
-
-    function openTaskModal() {
-        renderTaskModal();
-        document.getElementById('taskModal').classList.add('show');
-    }
-    function closeTaskModal() {
-        document.getElementById('taskModal').classList.remove('show');
-    }
-
-    // ========== 原有卡密系统增强 + 虚拟币修改功能（超级牛逼）==========
-    // 保留原本卡密: "astracraftnb666" 显示专属内容
-    // 额外增加管理卡密: "supercoin2026" 可自由修改虚拟币数量
-    const ORIGINAL_CARD = "astracraftnb666";      // 原内容解锁卡密
-    const ADMIN_COIN_CARD = "astracraftnb666";      // 管理调额卡密（可自定义）
-    
-    // 新版卡密处理器（完全替换之前逻辑，同时兼容两种）
-    window.handleCardSystem = function() {
-        const inputVal = document.getElementById('cardPwd').value.trim();
-        const resBox = document.getElementById('unlockRes');
-        
-        // 情况1：原卡密 -> 展示专属内容
-        if(inputVal === ORIGINAL_CARD) {
-            resBox.className = "unlock-result glass success-text";
-            resBox.innerHTML = `✅ 卡密验证成功！解锁专属内容<br>
-            🔹 虚拟币系统已激活，当前晶核: ${userCoin}<br>
-            🔹 专属社区特权：后续版本优先体验<br>
-            🔹 感谢支持重装上阵！`;
-            resBox.style.display = "block";
-            // 额外赠送小彩蛋 +20 晶核 (仅首次)
-            let bonusGiven = localStorage.getItem('cardBonusGiven');
-            if(!bonusGiven) {
-                modifyCoin(30, '专属卡密福利彩蛋');
-                localStorage.setItem('cardBonusGiven', 'true');
-                resBox.innerHTML += `<br><span style="color:#facc15;">✨ 彩蛋触发！额外赠送 30 晶核～</span>`;
-            }
+        let today = new Date().toDateString();
+        let lastSign = localStorage.getItem('lastSignDate');
+        if (lastSign === today) {
+            alert('今天已经签到过了，明天再来吧！');
             return;
         }
-        
-        // 情况2：管理调额卡密 -> 弹出窗口自由修改虚拟币数量 (真·牛逼)
-        if(inputVal === ADMIN_COIN_CARD) {
-            let action = prompt("⚡ 管理员卡密验证通过！\n请输入修改数量：\n正数增加（例如 500）\n负数减少（例如 -200）\n可直接调整虚拟币余额。");
-            if(action !== null) {
-                let amount = Number(action);
-                if(isNaN(amount)) {
-                    resBox.className = "unlock-result glass error-text";
-                    resBox.innerHTML = "❌ 输入错误，必须为数字！";
-                    resBox.style.display = "block";
+        localStorage.setItem('lastSignDate', today);
+        modifyCrystal(20);
+        alert('签到成功！获得 20 晶核 💎');
+    }
+    
+    // ===== 核心：修改原有卡密功能，让卡密可以调晶核数量 =====
+    // 等待原页面加载完成后，劫持 checkCardPwd 函数
+    let interval = setInterval(function() {
+        if (typeof window.checkCardPwd === 'function') {
+            clearInterval(interval);
+            // 保存原函数
+            let originalCheckCardPwd = window.checkCardPwd;
+            // 重写
+            window.checkCardPwd = function() {
+                let val = document.getElementById("cardPwd").value.trim();
+                let resBox = document.getElementById("unlockRes");
+                
+                // 如果是正确的原卡密
+                if (val === "astracraftnb666") {
+                    // 弹出输入框让用户输入要修改的晶核数量
+                    let amount = prompt('✅ 卡密验证成功！\n请输入要修改的晶核数量：\n（正数增加，负数减少）');
+                    if (amount !== null) {
+                        let num = parseInt(amount);
+                        if (!isNaN(num)) {
+                            let newBal = modifyCrystal(num);
+                            // 显示成功信息到原来的解锁结果区域
+                            if (resBox) {
+                                resBox.className = "unlock-result glass success-text";
+                                resBox.innerHTML = `🎉 晶核修改成功！变动 ${num >= 0 ? '+' : ''}${num}，当前晶核: ${newBal}`;
+                                resBox.style.display = "block";
+                                setTimeout(() => { resBox.style.display = "none"; }, 3000);
+                            } else {
+                                alert(`晶核修改成功！当前: ${newBal}`);
+                            }
+                        } else {
+                            alert('请输入有效的数字！');
+                        }
+                    }
                     return;
                 }
-                let newBal = modifyCoin(amount, '超级卡密调额');
-                resBox.className = "unlock-result glass success-text";
-                resBox.innerHTML = `🎉 超级授权成功！虚拟币变动 ${amount>=0 ? `+${amount}` : amount} 晶核<br>💰 当前余额: ${newBal} 晶核`;
-                resBox.style.display = "block";
-                // 额外记录炫耀一下
-                setTimeout(() => {
-                    let msgDiv = document.getElementById('unlockRes');
-                    if(msgDiv) setTimeout(() => { if(msgDiv.style.display !== 'none') msgDiv.style.display = 'none'; }, 4000);
-                }, 3500);
-            }
-            return;
-        }
-        
-        // 卡密错误
-        resBox.className = "unlock-result glass error-text";
-        resBox.innerHTML = "❌ 卡密无效，无权限操作！";
-        resBox.style.display = "block";
-    };
-    
-    // 给按钮绑定事件 (同时保留原有交互)
-    document.addEventListener('DOMContentLoaded', () => {
-        loadCoin();
-        
-        // 绑定解锁按钮
-        const unlockBtn = document.getElementById('unlockBtn');
-        if(unlockBtn) unlockBtn.onclick = () => window.handleCardSystem();
-        
-        // 绑定任务相关
-        const openBtn = document.getElementById('openTaskBtn');
-        if(openBtn) openBtn.onclick = openTaskModal;
-        const checkMissionBtn = document.getElementById('checkMissionBtn');
-        if(checkMissionBtn) checkMissionBtn.onclick = openTaskModal;
-        const closeModalBtn = document.getElementById('closeTaskModalBtn');
-        if(closeModalBtn) closeModalBtn.onclick = closeTaskModal;
-        const closeFooter = document.getElementById('closeTaskFooter');
-        if(closeFooter) closeFooter.onclick = closeTaskModal;
-        
-        // 点击遮罩关闭弹窗
-        const modal = document.getElementById('taskModal');
-        if(modal) modal.addEventListener('click', (e) => {
-            if(e.target === modal) closeTaskModal();
-        });
-        
-        // 管理调额快捷按钮（右上角那个卡密调额按钮）
-        const adminCoinBtn = document.getElementById('adminCoinBtn');
-        if(adminCoinBtn) {
-            adminCoinBtn.onclick = () => {
-                let customCard = prompt("🔐 请输入管理调额卡密（超级卡密: supercoin2026）");
-                if(customCard === ADMIN_COIN_CARD) {
-                    let amount = prompt("授权通过！输入晶核变动数量 (正数增加，负数减少):");
-                    if(amount !== null && !isNaN(Number(amount))) {
-                        let newVal = modifyCoin(Number(amount), '快捷面板调额');
-                        alert(`✅ 调整成功！当前晶核: ${newVal}`);
-                    } else if(amount !== null) alert("无效的数字");
-                } else if(customCard !== null && customCard !== "") {
-                    alert("❌ 管理卡密错误，无法调额");
+                
+                // 卡密错误时调用原函数（原函数会显示错误信息）
+                if (originalCheckCardPwd) {
+                    originalCheckCardPwd();
                 }
             };
         }
-        
-        // 填充交友栏和悬赏令 (原样风格)
-        const friendData = [
-            { douyin:"矽忈", gameName:"矽忈", code:"3195953326" },
-            { douyin:"3ooy1415", gameName:"爱得去", code:"3359527311" }
-        ];
-        const rewardData = [
-            { gameName:"夜明|獃獃魚呀", code:"1461657317" },
-            { gameName:"默默太普通弟", code:"3297324323" }
-        ];
-        let friendHtml = '';
-        friendData.forEach(f => {
-            friendHtml += `<div class="common-line">🎮 抖音: ${f.douyin} ｜ 重装: ${f.gameName} ｜ 编号: ${f.code}</div>`;
-        });
-        document.getElementById('friendList').innerHTML = friendHtml;
-        
-        let rewardHtml = '';
-        rewardData.forEach(r => {
-            rewardHtml += `<div class="common-line">🏅 悬赏令 · ${r.gameName} ｜ 编号: ${r.code}</div>`;
-        });
-        document.getElementById('rewardList').innerHTML = rewardHtml;
-        
-        // 展示初始余额
-        updateCoinUI();
+    }, 100);
+    
+    // 页面加载完成后添加面板和绑定签到
+    window.addEventListener('DOMContentLoaded', function() {
+        addCoinPanel();
+        updateCoinDisplay();
+        let signBtn = document.getElementById('dailySignBtn');
+        if (signBtn) signBtn.onclick = dailySign;
     });
-    
-    // 暴露全局函数以供任务按钮直接调用
-    window.dailySign = dailySign;
-    window.watchAdTask = watchAdTask;
-    window.inviteFriend = inviteFriend;
-    window.openTaskModal = openTaskModal;
-    window.closeTaskModal = closeTaskModal;
-    window.modifyCoin = modifyCoin;
+})();
 </script>
-</body>
-</html>
+<!-- ========== 虚拟币系统结束 ========== -->
