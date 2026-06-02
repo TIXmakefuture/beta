@@ -199,6 +199,8 @@
             font-size: 0.9rem;
             word-break: break-all;
         }
+        .success-text { color: #4ade80; background: rgba(74,222,128,0.1); }
+        .error-text { color: #f87171; background: rgba(248,113,113,0.1); }
 
         .unlock-wrap {
             width: 100%;
@@ -225,8 +227,6 @@
             border-radius: 12px;
             display: none;
         }
-        .success-text { color: #4ade80; background: rgba(74,222,128,0.1); }
-        .error-text { color: #f87171; background: rgba(248,113,113,0.1); }
 
         .common-box {
             margin: 0 8% 1.5rem;
@@ -393,9 +393,8 @@
             border-radius: 50%;
             background: rgba(56, 189, 248, 0.9);
             backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 8px 30px rgba(56, 189, 248, 0.3);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 8px 30px rgba(56,189,248,0.3);
             cursor: pointer;
             z-index: 9999;
             display: flex;
@@ -567,7 +566,7 @@
             </div>
             <div id="importArea" style="display:none;">
                 <div class="code-input-group">
-                    <input type="text" class="code-input" id="importCodeInput" placeholder="粘贴存档码（一串乱码）">
+                    <input type="text" class="code-input" id="importCodeInput" placeholder="粘贴存档码">
                     <button class="btn btn-primary" id="confirmImportBtn" style="padding:0.8rem 1.5rem;">导入</button>
                 </div>
                 <div class="code-result" id="importResult"></div>
@@ -737,51 +736,63 @@ function dailySign() {
 }
 document.getElementById('dailySignBtn').onclick = dailySign;
 
-// ===================== 存档码生成（加密乱码）=====================
+// ===================== 存档码（简单可靠版本）=====================
+// 加密：晶核 → 乱码（使用Base64编码，简单可靠）
 function generateSaveCode(amount) {
-    let base = amount + 88888;
-    let encoded = base.toString(36).toUpperCase();
-    let prefix = "XK" + Math.random().toString(36).substring(2, 5).toUpperCase();
-    let suffix = "Z" + Math.random().toString(36).substring(2, 4).toUpperCase();
-    let fakeCode = prefix + encoded + suffix;
-    let finalCode = fakeCode.split('').reverse().join('');
-    return finalCode;
+    // 把金额转成字符串，再用Base64编码
+    let str = amount.toString();
+    let base64 = btoa(str);
+    // 加上随机前缀后缀，让它看起来像乱码
+    let randomPre = Math.random().toString(36).substring(2, 5);
+    let randomSuf = Math.random().toString(36).substring(2, 5);
+    // 最终格式：随机前缀 + Base64编码 + 随机后缀
+    let code = randomPre + base64 + randomSuf;
+    return code;
 }
 
+// 解密：乱码 → 晶核
 function parseSaveCode(code) {
     try {
-        let reversed = code.split('').reverse().join('');
-        let cleaned = reversed.replace(/[^A-Z0-9]/gi, '');
-        for (let i = 0; i < cleaned.length; i++) {
-            for (let j = i + 1; j <= cleaned.length; j++) {
-                let sub = cleaned.substring(i, j);
-                try {
-                    let num = parseInt(sub, 36);
-                    if (!isNaN(num) && num > 10000 && num < 999999) {
-                        let coin = num - 88888;
-                        if (coin >= 0 && coin <= 100000) return coin;
-                    }
-                } catch(e) {}
-            }
+        // 提取中间的Base64部分（去掉前后随机字符）
+        // Base64编码只包含 A-Z a-z 0-9 + / = 
+        let match = code.match(/[A-Za-z0-9+/=]+/);
+        if (!match) return null;
+        let base64Part = match[0];
+        // 尝试解码
+        let decoded = atob(base64Part);
+        let amount = parseInt(decoded);
+        if (!isNaN(amount) && amount >= 0 && amount <= 999999) {
+            return amount;
         }
         return null;
-    } catch(e) { return null; }
+    } catch(e) {
+        return null;
+    }
 }
 
+// 导出存档码
 function exportSaveCode() {
     let code = generateSaveCode(crystalCoin);
-    alert(`📋 你的存档码（加密乱码）：\n\n${code}\n\n请复制保存，可在其他地方导入恢复晶核数量！`);
+    alert(`📋 你的存档码：\n\n${code}\n\n请复制保存！`);
     navigator.clipboard.writeText(code).catch(() => {});
+    // 同时也显示在结果区
+    let resultDiv = document.getElementById('importResult');
+    if (resultDiv) {
+        resultDiv.className = "code-result success-text";
+        resultDiv.innerHTML = `📤 已生成存档码：<br><code style="background:#000;padding:4px 8px;border-radius:8px;display:inline-block;margin-top:8px;">${code}</code><br>已复制到剪贴板`;
+        resultDiv.style.display = "block";
+        setTimeout(() => resultDiv.style.display = "none", 5000);
+    }
 }
 document.getElementById('exportCodeBtn').onclick = exportSaveCode;
 
 // 导入存档码
 function importSaveCode(code) {
-    let parsedCoin = parseSaveCode(code.trim());
-    if (parsedCoin !== null && !isNaN(parsedCoin)) {
-        crystalCoin = parsedCoin;
+    let coin = parseSaveCode(code.trim());
+    if (coin !== null && !isNaN(coin)) {
+        crystalCoin = coin;
         updateCoinDisplay();
-        return { success: true, amount: parsedCoin };
+        return { success: true, amount: coin };
     }
     return { success: false };
 }
@@ -789,28 +800,41 @@ function importSaveCode(code) {
 // 导入UI
 let importArea = document.getElementById('importArea');
 let showImportBtn = document.getElementById('showImportBtn');
+let isImportOpen = false;
 showImportBtn.onclick = () => {
-    importArea.style.display = importArea.style.display === 'none' ? 'block' : 'none';
+    isImportOpen = !isImportOpen;
+    importArea.style.display = isImportOpen ? 'block' : 'none';
+    if (!isImportOpen) {
+        document.getElementById('importCodeInput').value = '';
+        document.getElementById('importResult').style.display = 'none';
+    }
 };
+
 document.getElementById('confirmImportBtn').onclick = () => {
     let code = document.getElementById('importCodeInput').value.trim();
     let resultDiv = document.getElementById('importResult');
+    
     if (!code) {
         resultDiv.className = "code-result error-text";
         resultDiv.innerHTML = "❌ 请输入存档码";
         resultDiv.style.display = "block";
         return;
     }
+    
     let result = importSaveCode(code);
     if (result.success) {
         resultDiv.className = "code-result success-text";
         resultDiv.innerHTML = `✅ 导入成功！晶核数量已更新为: ${result.amount} 💎`;
         resultDiv.style.display = "block";
         document.getElementById('importCodeInput').value = '';
-        setTimeout(() => resultDiv.style.display = "none", 3000);
+        setTimeout(() => {
+            resultDiv.style.display = "none";
+            importArea.style.display = 'none';
+            isImportOpen = false;
+        }, 2500);
     } else {
         resultDiv.className = "code-result error-text";
-        resultDiv.innerHTML = "❌ 存档码无效！请检查是否正确复制";
+        resultDiv.innerHTML = "❌ 存档码无效！请检查是否完整复制";
         resultDiv.style.display = "block";
     }
 };
@@ -862,30 +886,4 @@ function getAIReply(text){
     if(kw.includes('社区') || kw.includes('加入')){
         return "欢迎来到重装上阵玩家社区，这里可以分享机甲、找队友、交流战术，抖音群：664859491263。";
     }
-    if(kw.includes('你好') || kw.includes('哈喽')){
-        return "你好呀！我是重装上阵AI助手，可以为你解答机甲、组队、玩法、社区相关问题~";
-    }
-    if(kw.includes('晶核') || kw.includes('虚拟币') || kw.includes('存档码')){
-        return "晶核可通过每日签到获得！点击「导出存档码」可生成加密乱码，在别处「导入存档码」即可同步晶核数量。";
-    }
-    return "我暂时还没学会这个问题，你可以问我机甲分享、组队开黑、战术玩法、存档码相关问题哦！";
-}
-function sendAIMsg(){
-    let input = document.getElementById('aiInput');
-    let history = document.getElementById('chatHistory');
-    let text = input.value.trim();
-    if(!text) return;
-    history.innerHTML += `<div class="msg-user"><span>${text}</span></div>`;
-    input.value = '';
-    setTimeout(()=>{
-        let rep = getAIReply(text);
-        history.innerHTML += `<div class="msg-ai"><span>${rep}</span></div>`;
-        history.scrollTop = history.scrollHeight;
-    }, 300);
-    history.scrollTop = history.scrollHeight;
-}
-
-updateCoinDisplay();
-</script>
-</body>
-</html>
+    if(kw.includes
