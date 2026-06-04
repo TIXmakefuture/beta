@@ -12,18 +12,10 @@
         }
 
         body {
-            background-color: #ffffff;  /* 纯白背景，干净极致 */
+            background-color: #ffffff;  /* 纯白背景 */
             font-family: 'Inter', 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
             color: #11171f;
             line-height: 1.5;
-            scroll-behavior: smooth;
-        }
-
-        /* 简洁容器 */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
         }
 
         /* Hero 区域 — 全屏高度，内容居中 */
@@ -37,7 +29,7 @@
             padding: 2rem;
         }
 
-        /* 高端文字渐变 — 天蓝到深蓝，干净有力 */
+        /* 高端文字渐变 — 天蓝到深蓝 */
         .glow-title {
             font-size: clamp(2.8rem, 8vw, 5rem);
             font-weight: 700;
@@ -60,38 +52,11 @@
 
         .description {
             max-width: 560px;
-            margin: 0 auto 2rem;
+            margin: 0 auto;
             font-size: 1rem;
             opacity: 0.65;
             font-weight: 400;
             color: #1f3b4c;
-        }
-
-        /* 毛玻璃按钮 — 极其微弱的边缘光晕，天蓝冷色调 */
-        .btn-glass {
-            background: rgba(240, 248, 255, 0.65);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(28, 111, 176, 0.35);
-            color: #0a4c7a;
-            padding: 0.85rem 2.2rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-            text-transform: uppercase;
-            box-shadow: 0 0 10px rgba(28, 111, 176, 0.15), inset 0 0 6px rgba(28, 111, 176, 0.08);
-        }
-
-        .btn-glass:hover {
-            background: rgba(220, 240, 255, 0.85);
-            border-color: rgba(28, 111, 176, 0.7);
-            box-shadow: 0 0 18px rgba(28, 111, 176, 0.3);
-            transform: scale(1.01);
-            letter-spacing: 0.12em;
-            color: #02457a;
         }
 
         /* 底部栏 — 极简毛玻璃效果 + 微弱天蓝边缘 */
@@ -133,7 +98,6 @@
             font-weight: 400;
         }
 
-        /* 响应式微调 */
         @media (max-width: 700px) {
             .hero {
                 padding: 1rem;
@@ -146,40 +110,22 @@
 </head>
 <body>
 
-    <!-- 主视觉区域 - 仅保留核心文字和按钮，无鼠标指示器 -->
+    <!-- 主视觉区域 - 仅文字，无按钮 -->
     <section class="hero">
         <h1 class="glow-title">MAKE FUTURE</h1>
         <div class="subtitle">TRANSCEND THE EDGE</div>
         <div class="description">
             以纯粹语言重构边界 — 精准、秩序、未来感知。
         </div>
-        <button class="btn-glass" id="exploreBtn">探 索 未 知 →</button>
     </section>
 
-    <!-- 底部跳转区 - 仅保留外链按钮 -->
+    <!-- 底部跳转区 -->
     <div class="footer">
         <button class="btn-outline-light" id="visitBtn">↗ 访问官方主页</button>
         <div class="copyright">✦  BEYOND THE PROTOTYPE  |  FUTURE IS NOW  ✦</div>
     </div>
 
     <script>
-        // 点击主按钮：平滑滚动到底部（展示footer区域）
-        const exploreBtn = document.getElementById('exploreBtn');
-        const footerElement = document.querySelector('.footer');
-
-        function scrollToFooter() {
-            if (footerElement) {
-                footerElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-            // 按钮视觉反馈
-            if (exploreBtn) {
-                exploreBtn.style.transform = 'scale(0.97)';
-                setTimeout(() => { if (exploreBtn) exploreBtn.style.transform = ''; }, 180);
-            }
-        }
-
-        if (exploreBtn) exploreBtn.addEventListener('click', scrollToFooter);
-
         // 底部外链跳转 (新标签页打开 tixmakefuture.github.io)
         const visitBtn = document.getElementById('visitBtn');
         if (visitBtn) {
