@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>MAKE FUTURE</title>
+    <title>MAKE FUTURE | 纯粹边界</title>
     <style>
         * {
             margin: 0;
@@ -133,54 +133,6 @@
             font-weight: 400;
         }
 
-        /* 滚动鼠标指示器 — 轻盈淡蓝 */
-        .scroll-mouse {
-            position: absolute;
-            bottom: 28px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            opacity: 0.55;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        .scroll-mouse:hover {
-            opacity: 0.85;
-        }
-        .mouse-wheel {
-            width: 26px;
-            height: 40px;
-            border: 1.5px solid #1c6fb0;
-            border-radius: 20px;
-            position: relative;
-        }
-        .mouse-wheel::after {
-            content: '';
-            width: 2px;
-            height: 8px;
-            background: #1c6fb0;
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-            animation: scrollAnim 1.5s infinite cubic-bezier(0.45, 0, 0.55, 1);
-        }
-        @keyframes scrollAnim {
-            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            70% { opacity: 0.3; transform: translateX(-50%) translateY(12px); }
-            100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        .scroll-text {
-            font-size: 0.6rem;
-            letter-spacing: 2px;
-            font-weight: 400;
-            color: #2c6b9e;
-        }
-
         /* 响应式微调 */
         @media (max-width: 700px) {
             .hero {
@@ -194,32 +146,25 @@
 </head>
 <body>
 
-    <!-- 主视觉区域 - 仅保留核心文字和按钮，无卡片 -->
+    <!-- 主视觉区域 - 仅保留核心文字和按钮，无鼠标指示器 -->
     <section class="hero">
         <h1 class="glow-title">MAKE FUTURE</h1>
         <div class="subtitle">TRANSCEND THE EDGE</div>
         <div class="description">
-            以纯粹语言重构边界
+            以纯粹语言重构边界 — 精准、秩序、未来感知。
         </div>
         <button class="btn-glass" id="exploreBtn">探 索 未 知 →</button>
-        <!-- 滚动提示鼠标（优雅保留） -->
-        <div class="scroll-mouse" id="scrollHint">
-            <div class="mouse-wheel"></div>
-            <div class="scroll-text">滚动探索</div>
-        </div>
     </section>
 
-    <!-- 底部跳转区 - 仅保留外链按钮，无其他模块 -->
+    <!-- 底部跳转区 - 仅保留外链按钮 -->
     <div class="footer">
         <button class="btn-outline-light" id="visitBtn">↗ 访问官方主页</button>
         <div class="copyright">✦  BEYOND THE PROTOTYPE  |  FUTURE IS NOW  ✦</div>
     </div>
 
     <script>
-        // 点击主按钮 / 滚动鼠标：平滑滚动到底部（展示footer区域或简单交互）
-        // 由于移除了卡片区域，这里将滚动定位到 footer 上方，展示完整页面结构
+        // 点击主按钮：平滑滚动到底部（展示footer区域）
         const exploreBtn = document.getElementById('exploreBtn');
-        const scrollHint = document.getElementById('scrollHint');
         const footerElement = document.querySelector('.footer');
 
         function scrollToFooter() {
@@ -234,14 +179,13 @@
         }
 
         if (exploreBtn) exploreBtn.addEventListener('click', scrollToFooter);
-        if (scrollHint) scrollHint.addEventListener('click', scrollToFooter);
 
         // 底部外链跳转 (新标签页打开 tixmakefuture.github.io)
         const visitBtn = document.getElementById('visitBtn');
         if (visitBtn) {
             visitBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                window.open('https://tixmakefuture.github.io/home', '_blank', 'noopener,noreferrer');
+                window.open('https://tixmakefuture.github.io', '_blank', 'noopener,noreferrer');
                 visitBtn.style.transform = 'scale(0.96)';
                 setTimeout(() => { if (visitBtn) visitBtn.style.transform = ''; }, 150);
             });
