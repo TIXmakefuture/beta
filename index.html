@@ -2,680 +2,134 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>重装上阵 · 玩家社区 | 安全存档码系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>提示 | 测试版暂无内容</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: #f5f5f7;  /* 灰白底 */
-            font-family: -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
-            color: #1c1c1e;
-            padding: 1.5rem;
-        }
-
-        /* 毛玻璃容器通用 */
-        .glass {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 32px;
-            border: 0.5px solid rgba(0, 0, 0, 0.04);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02);
-            transition: all 0.2s ease;
-        }
-
-        /* 导航栏 */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            padding: 1rem 1.5rem;
-            margin-bottom: 1.5rem;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            border-radius: 60px;
-            border: 0.5px solid rgba(0,0,0,0.04);
-        }
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #1c1c1e;
-            letter-spacing: -0.3px;
-        }
-        .coin-panel {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(0,0,0,0.03);
-            padding: 0.4rem 1rem;
-            border-radius: 40px;
-        }
-        .coin-balance {
-            color: #007aff;
-            font-weight: 590;
-            font-size: 1rem;
-        }
-        .coin-btn {
-            background: #e9e9ef;
-            border: none;
-            padding: 0.3rem 0.9rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            color: #1c1c1e;
-            transition: 0.2s;
-        }
-        .coin-btn:hover {
-            background: #d9d9df;
-        }
-        .nav-links a {
-            color: #6c6c70;
-            text-decoration: none;
-            margin-left: 1.5rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        .nav-links a:hover {
-            color: #007aff;
-        }
-
-        /* 主区域 */
-        .hero {
-            padding: 2rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .hero h1 {
-            font-size: 2.2rem;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-            color: #1c1c1e;
-            margin-bottom: 0.5rem;
-        }
-        .hero p {
-            color: #6c6c70;
-            font-size: 0.95rem;
-            max-width: 550px;
-            margin: 0 auto 1.5rem;
-        }
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .btn {
-            padding: 0.6rem 1.4rem;
-            border-radius: 40px;
-            font-weight: 500;
-            text-decoration: none;
-            font-size: 0.9rem;
-            cursor: pointer;
-            border: none;
-            transition: 0.2s;
-        }
-        .btn-primary {
-            background: #007aff;
-            color: white;
-            box-shadow: 0 2px 8px rgba(0,122,255,0.2);
-        }
-        .btn-primary:hover {
-            background: #005fc1;
-        }
-        .btn-secondary {
-            background: rgba(0,0,0,0.05);
-            color: #007aff;
-            border: 0.5px solid rgba(0,0,0,0.05);
-        }
-        .btn-secondary:hover {
-            background: rgba(0,0,0,0.08);
-        }
-
-        /* 存档码区域 */
-        .code-section {
-            margin-top: 1.5rem;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .code-input-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 0.8rem;
-        }
-        .code-input {
-            flex: 1;
-            padding: 12px 16px;
-            background: rgba(0,0,0,0.02);
-            border: 0.5px solid rgba(0,0,0,0.1);
-            border-radius: 40px;
-            font-family: monospace;
-            font-size: 0.85rem;
-            outline: none;
-            color: #1c1c1e;
-        }
-        .code-result {
-            margin-top: 0.8rem;
-            padding: 0.8rem;
-            border-radius: 24px;
-            font-size: 0.85rem;
-            display: none;
-        }
-        .success-text { color: #28a745; background: rgba(40,167,69,0.1); border-left: 3px solid #28a745; }
-        .error-text { color: #dc3545; background: rgba(220,53,69,0.08); border-left: 3px solid #dc3545; }
-
-        /* 卡密解锁区 */
-        .unlock-wrap {
-            max-width: 400px;
-            margin: 1.5rem auto 0;
-            padding: 1.5rem;
-        }
-        .unlock-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(0,0,0,0.02);
-            border: 0.5px solid rgba(0,0,0,0.1);
-            border-radius: 40px;
-            margin-bottom: 0.8rem;
-            font-size: 0.9rem;
-        }
-        .unlock-result {
-            margin-top: 0.8rem;
-            padding: 0.8rem;
-            border-radius: 20px;
-            display: none;
-        }
-
-        /* 双栏列表（交友/悬赏） */
-        .common-box {
-            margin-bottom: 1.5rem;
-            padding: 1.2rem 1.5rem;
-            position: relative;
-        }
-        .common-box h3 {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: #1c1c1e;
-            margin-bottom: 0.8rem;
-        }
-        .full-btn {
-            position: absolute;
-            top: 1.2rem;
-            right: 1.5rem;
-            background: rgba(0,0,0,0.05);
-            border: none;
-            padding: 0.2rem 0.8rem;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            cursor: pointer;
-            color: #007aff;
-        }
-        .common-list-wrap {
-            max-height: 200px;
-            overflow-y: auto;
-        }
-        .common-line {
-            padding: 0.6rem 0;
-            border-bottom: 0.5px solid rgba(0,0,0,0.05);
-            font-size: 0.85rem;
-        }
-        .common-line span {
-            color: #6c6c70;
-        }
-
-        /* 全屏遮罩 */
-        .full-mask {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(12px);
-            z-index: 10000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        .full-mask.show {
-            display: flex;
-        }
-        .full-content {
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            padding: 1.5rem;
-            background: rgba(255,255,255,0.95);
-            border-radius: 40px;
-        }
-        .full-close {
-            float: right;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #8e8e93;
-        }
-
-        /* 作者寄语 */
-        .author-box {
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .author-word {
-            font-size: 0.9rem;
-            color: #6c6c70;
+            background-color: #ffffff;
+            font-family: 'Inter', 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+            color: #11171f;
             line-height: 1.5;
-        }
-
-        /* 功能卡片区 */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-        .card {
-            padding: 1.5rem;
-        }
-        .card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.6rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .card p {
-            font-size: 0.85rem;
-            color: #6c6c70;
-            margin-bottom: 1rem;
-        }
-
-        /* 更新公告 */
-        .update-notice {
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .update-item {
-            padding: 0.8rem 0;
-            border-bottom: 0.5px solid rgba(0,0,0,0.05);
-        }
-        .update-time {
-            font-weight: 500;
-            color: #007aff;
-            margin-bottom: 0.2rem;
-            font-size: 0.8rem;
-        }
-
-        footer {
-            text-align: center;
-            padding: 1rem;
-            font-size: 0.7rem;
-            color: #8e8e93;
-        }
-
-        /* AI 悬浮球 & 遮罩（浅色风格） */
-        .ai-float-btn {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            width: 56px;
-            height: 56px;
-            background: #007aff;
-            border-radius: 30px;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,122,255,0.3);
-            z-index: 9999;
-            transition: 0.2s;
         }
-        .ai-mask {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
+
+        /* 卡片容器 — 毛玻璃效果 */
+        .message-card {
+            text-align: center;
+            max-width: 480px;
+            padding: 2.5rem 2rem;
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
-            z-index: 10001;
-            opacity: 0;
-            pointer-events: none;
-            transition: 0.3s;
+            border-radius: 48px;
+            border: 1px solid rgba(28, 111, 176, 0.25);
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(28, 111, 176, 0.1) inset;
+            margin: 1rem;
         }
-        .ai-mask.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .ai-dialog-wrap {
-            position: absolute;
-            left: 50%;
-            bottom: 100px;
-            transform: translateX(-50%) scale(0.9);
-            opacity: 0;
-            width: 90%;
-            max-width: 450px;
-            transition: 0.3s;
-            background: rgba(255,255,255,0.95);
-            border-radius: 32px;
-            padding: 1rem;
-            backdrop-filter: blur(20px);
-        }
-        .ai-mask.show .ai-dialog-wrap {
-            transform: translateX(-50%) scale(1);
-            opacity: 1;
-        }
-        .ai-chat-history {
-            max-height: 300px;
-            overflow-y: auto;
+
+        /* 图标占位 */
+        .placeholder-icon {
+            font-size: 3.5rem;
             margin-bottom: 1rem;
-            padding: 0.5rem;
+            opacity: 0.7;
+            filter: drop-shadow(0 2px 6px rgba(28,111,176,0.2));
         }
-        .msg-user { text-align: right; margin: 8px 0; }
-        .msg-user span { background: #007aff; color: white; padding: 6px 12px; border-radius: 20px; display: inline-block; max-width: 80%; font-size: 0.85rem; }
-        .msg-ai { text-align: left; margin: 8px 0; }
-        .msg-ai span { background: #e9e9ef; color: #1c1c1e; padding: 6px 12px; border-radius: 20px; display: inline-block; max-width: 80%; font-size: 0.85rem; }
-        .ai-input-box {
-            display: flex;
-            gap: 8px;
-        }
-        .ai-input-box input {
-            flex: 1;
-            padding: 10px 16px;
-            border-radius: 40px;
-            border: 0.5px solid rgba(0,0,0,0.1);
-            background: white;
-        }
-        .ai-input-box button {
-            background: #007aff;
-            border: none;
-            padding: 0 20px;
-            border-radius: 40px;
-            color: white;
+
+        h2 {
+            font-size: 1.8rem;
             font-weight: 500;
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, #0a2b44, #1c6fb0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
         }
-        .close-ai {
-            position: absolute;
-            top: 10px;
-            right: 16px;
-            font-size: 24px;
+
+        .message-text {
+            font-size: 1rem;
+            color: #3a5c7c;
+            margin-bottom: 2rem;
+            opacity: 0.75;
+        }
+
+        /* 毛玻璃按钮 */
+        .btn-return {
+            background: rgba(240, 248, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(28, 111, 176, 0.4);
+            color: #0a4c7a;
+            padding: 0.75rem 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            border-radius: 60px;
             cursor: pointer;
-            color: #8e8e93;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            text-transform: uppercase;
+            box-shadow: 0 0 8px rgba(28, 111, 176, 0.15);
+        }
+
+        .btn-return:hover {
+            background: rgba(220, 240, 255, 0.85);
+            border-color: #1c6fb0;
+            box-shadow: 0 0 16px rgba(28, 111, 176, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* 底部小字装饰 */
+        .footnote {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #8aaec0;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 500px) {
+            .message-card {
+                padding: 2rem 1.5rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="logo">重装上阵社区</div>
-        <div class="coin-panel">
-            <span class="coin-balance">💎 晶核: <span id="crystalAmount">100</span></span>
-            <button class="coin-btn" id="dailySignBtn">📅 签到</button>
-            <button class="coin-btn" id="exportCodeBtn">📤 导出存档码</button>
-        </div>
-        <div class="nav-links">
-            <a href="#home">首页</a>
-            <a href="#features">社区</a>
-            <a href="#update">更新</a>
-            <a href="#about">关于</a>
-        </div>
-    </nav>
 
-    <div class="hero glass" id="home">
-        <h1>欢迎来到重装上阵玩家社区</h1>
-        <p>机甲分享 · 组队开黑 · 战术交流</p>
-        <div class="btn-group">
-            <a href="javascript:void(0);" onclick="alert('抖音群号：664859491263，快去抖音搜索加入吧！')" class="btn btn-primary">加入抖音群聊</a>
-            <a href="#features" class="btn btn-secondary">了解更多</a>
+    <div class="message-card">
+        <div class="placeholder-icon">🔧</div>
+        <h2>暂无内容</h2>
+        <div class="message-text">
+            当前测试版尚未提供此模块<br>敬请期待后续更新
         </div>
-        <div class="code-section">
-            <div class="btn-group">
-                <button class="btn btn-secondary" id="showImportBtn">📥 导入存档码</button>
-            </div>
-            <div id="importArea" style="display:none; margin-top: 1rem;">
-                <div class="code-input-group">
-                    <input type="text" class="code-input" id="importCodeInput" placeholder="粘贴存档码（支持新版ARCHIVE_或旧版COIN）">
-                    <button class="btn btn-primary" id="confirmImportBtn">导入</button>
-                </div>
-                <div class="code-result" id="importResult"></div>
-            </div>
-        </div>
-        <div class="unlock-wrap glass">
-            <input type="text" class="unlock-input" id="cardPwd" placeholder="输入卡密查看专属内容">
-            <button class="btn btn-primary" style="width:100%;" onclick="checkCardPwd()">立即解锁</button>
-            <div class="unlock-result glass" id="unlockRes"></div>
-        </div>
+        <button class="btn-return" id="homeBtn">← 返回</button>
     </div>
+    <div class="footnote">✦ 测试环境 | MAKE FUTURE ✦</div>
 
-    <!-- 交友栏 & 悬赏令 -->
-    <div class="common-box glass">
-        <h3>交友栏</h3>
-        <button class="full-btn" onclick="openFriendFull()">全屏查看</button>
-        <div class="common-list-wrap" id="homeFriendList"></div>
-    </div>
-    <div class="common-box glass">
-        <h3>悬赏令</h3>
-        <button class="full-btn" onclick="openRewardFull()">全屏查看</button>
-        <div class="common-list-wrap" id="homeRewardList"></div>
-    </div>
-
-    <div class="full-mask" id="friendFullMask">
-        <div class="full-content">
-            <span class="full-close" onclick="closeFriendFull()">×</span>
-            <h3 style="margin-bottom: 1rem;">交友栏 · 全屏</h3>
-            <div id="fullFriendList"></div>
-        </div>
-    </div>
-    <div class="full-mask" id="rewardFullMask">
-        <div class="full-content">
-            <span class="full-close" onclick="closeRewardFull()">×</span>
-            <h3 style="margin-bottom: 1rem;">悬赏令 · 全屏</h3>
-            <div id="fullRewardList"></div>
-        </div>
-    </div>
-
-    <div class="author-box glass">
-        <h3>作者寄语</h3>
-        <div class="author-word">
-            感谢每一位喜欢重装上阵的小伙伴<br>
-            愿我们永远热爱机甲，保持初心✨
-        </div>
-    </div>
-
-    <div class="features" id="features">
-        <div class="card glass">
-            <h3>机甲分享</h3>
-            <p>上传创意机甲蓝图，交流设计思路。</p>
-            <button class="btn btn-secondary" onclick="alert('请前往抖音群664859491263分享')">立即分享</button>
-        </div>
-        <div class="card glass">
-            <h3>组队开黑</h3>
-            <p>寻找队友，告别单排孤独。</p>
-            <button class="btn btn-secondary" onclick="alert('抖音群664859491263组队')">寻找队友</button>
-        </div>
-        <div class="card glass">
-            <h3>战术交流</h3>
-            <p>分享技巧、地图理解。</p>
-            <button class="btn btn-secondary" onclick="alert('群内战术讨论')">交流战术</button>
-        </div>
-    </div>
-
-    <div class="update-notice glass" id="update">
-        <h3>版本更新公告</h3>
-        <div class="update-item"><div class="update-time">2026.06.06 · 全新视觉</div><p>社区界面改为浅色毛玻璃风格，体验更清爽。</p></div>
-        <div class="update-item"><div class="update-time">2026.06.02 · 安全存档码系统</div><p>支持防篡改存档码，跨设备同步晶核。</p></div>
-        <div class="update-item"><div class="update-time">2026.05.08 · 交友/悬赏令</div><p>新增交友栏和悬赏令板块。</p></div>
-    </div>
-
-    <footer id="about">© 2026 重装上阵玩家社区 · 热爱永不落幕</footer>
-
-    <div class="ai-float-btn" id="aiBtn" onclick="openAI()">🤖</div>
-    <div class="ai-mask" id="aiMask">
-        <div class="close-ai" onclick="closeAI()">×</div>
-        <div class="ai-dialog-wrap">
-            <div class="ai-chat-history" id="chatHistory"></div>
-            <div class="ai-input-box">
-                <input type="text" id="aiInput" placeholder="问机甲、存档码、社区..." onkeydown="if(event.key==='Enter')sendAIMsg()">
-                <button onclick="sendAIMsg()">发送</button>
-            </div>
-        </div>
-    </div>
-
-<script>
-    // 交友数据
-    const friendData = [
-        { douyin:"矽忈", gameName:"矽忈", code:"3195953326" },
-        { douyin:"3ooy1415", gameName:"爱得去", code:"3359527311" },
-    ];
-    const rewardData = [
-        { gameName:"夜明|獃獃魚呀", code:"1461657317" },
-        { gameName:"默默太普通弟", code:"3297324323" },
-    ];
-
-    function renderFriend(){
-        let html = '';
-        friendData.forEach(item=>{
-            html += `<div class="common-line"><span>抖音名：</span>${item.douyin} &nbsp;&nbsp; <span>重装名：</span>${item.gameName} &nbsp;&nbsp; <span>编号：</span>${item.code}</div>`;
-        });
-        document.getElementById('homeFriendList').innerHTML = html;
-        document.getElementById('fullFriendList').innerHTML = html;
-    }
-    function renderReward(){
-        let html = '';
-        rewardData.forEach(item=>{
-            html += `<div class="common-line"><span>游戏名称：</span>${item.gameName} &nbsp;&nbsp; <span>编号：</span>${item.code}</div>`;
-        });
-        document.getElementById('homeRewardList').innerHTML = html;
-        document.getElementById('fullRewardList').innerHTML = html;
-    }
-    renderFriend(); renderReward();
-
-    function openFriendFull(){ document.getElementById('friendFullMask').classList.add('show'); }
-    function closeFriendFull(){ document.getElementById('friendFullMask').classList.remove('show'); }
-    function openRewardFull(){ document.getElementById('rewardFullMask').classList.add('show'); }
-    function closeRewardFull(){ document.getElementById('rewardFullMask').classList.remove('show'); }
-
-    // 晶核系统
-    let crystalCoin = localStorage.getItem('crystalCoin') ? parseInt(localStorage.getItem('crystalCoin')) : 100;
-    function updateCoinDisplay() { document.getElementById('crystalAmount').innerText = crystalCoin; localStorage.setItem('crystalCoin', crystalCoin); }
-    function modifyCrystal(amount) { crystalCoin = Math.max(0, crystalCoin + amount); updateCoinDisplay(); return crystalCoin; }
-    updateCoinDisplay();
-
-    // 签到
-    document.getElementById('dailySignBtn').onclick = () => {
-        let today = new Date().toDateString();
-        if(localStorage.getItem('lastSign') === today) { alert('今天已签到过了'); return; }
-        localStorage.setItem('lastSign', today);
-        modifyCrystal(20);
-        alert('签到成功 +20 晶核');
-    };
-
-    // 安全存档码
-    const SECRET_SALT = "ASTRA_CRYSTAL_V2_SALT";
-    function calcChecksum(dataStr) {
-        let hash = 2166136261;
-        for(let i=0;i<dataStr.length;i++){ hash ^= dataStr.charCodeAt(i); hash += (hash<<1)+(hash<<4)+(hash<<7)+(hash<<8)+(hash<<24); hash >>>=0; }
-        for(let i=0;i<SECRET_SALT.length;i++){ hash ^= SECRET_SALT.charCodeAt(i); hash += (hash<<2)+(hash<<5); hash >>>=0; }
-        return (hash&0x7FFFFFFF).toString(16).padStart(8,'0').toUpperCase();
-    }
-    function generateSecureSaveCode(coins){
-        const version=2, timestamp=Date.now(), nonce=Math.floor(Math.random()*1000000000);
-        const payloadRaw=`${version}|${coins}|${timestamp}|${nonce}`;
-        const checksum=calcChecksum(payloadRaw);
-        return `ARCHIVE_${btoa(`${payloadRaw}|${checksum}`)}`;
-    }
-    function parseSecureSaveCode(fullCode){
-        if(!fullCode.startsWith('ARCHIVE_')) return null;
-        try{
-            let decoded=atob(fullCode.substring(8));
-            let parts=decoded.split('|');
-            if(parts.length!==5) return null;
-            let [verStr,coinStr,ts,nonce,checksum]=parts;
-            if(verStr!=='2') return null;
-            let coins=parseInt(coinStr);
-            if(isNaN(coins)||coins<0||coins>9999999) return null;
-            let payloadRaw=`${verStr}|${coinStr}|${ts}|${nonce}`;
-            if(calcChecksum(payloadRaw)!==checksum) return null;
-            return coins;
-        }catch(e){ return null; }
-    }
-    function parseLegacyCode(code){
-        let m=code.match(/COIN(\d+)/i);
-        return m ? parseInt(m[1]) : null;
-    }
-    function importSaveCode(raw){
-        let coin=parseSecureSaveCode(raw);
-        if(coin!==null) return coin;
-        return parseLegacyCode(raw);
-    }
-    document.getElementById('exportCodeBtn').onclick = () => {
-        let code=generateSecureSaveCode(crystalCoin);
-        alert('存档码已生成:\n'+code+'\n已复制');
-        navigator.clipboard.writeText(code);
-    };
-    let importArea=document.getElementById('importArea'), importOpen=false;
-    document.getElementById('showImportBtn').onclick=()=>{ importOpen=!importOpen; importArea.style.display=importOpen?'block':'none'; if(!importOpen) document.getElementById('importCodeInput').value=''; };
-    document.getElementById('confirmImportBtn').onclick=()=>{
-        let code=document.getElementById('importCodeInput').value.trim();
-        let resDiv=document.getElementById('importResult');
-        if(!code){ resDiv.className='code-result error-text'; resDiv.innerHTML='❌ 请输入存档码'; resDiv.style.display='block'; return; }
-        let coin=importSaveCode(code);
-        if(coin!==null){
-            crystalCoin=coin; updateCoinDisplay();
-            resDiv.className='code-result success-text'; resDiv.innerHTML=`✅ 导入成功！当前晶核: ${coin}`; resDiv.style.display='block';
-            setTimeout(()=>{ resDiv.style.display='none'; importArea.style.display='none'; importOpen=false; },2000);
-        }else{
-            resDiv.className='code-result error-text'; resDiv.innerHTML='❌ 无效存档码'; resDiv.style.display='block';
+    <script>
+        const homeBtn = document.getElementById('homeBtn');
+        if (homeBtn) {
+            homeBtn.addEventListener('click', () => {
+                window.location.href = ' https://tixmakefuture.github.io/home ';  
+                console.log("返回首页操作已触发");
+            });
         }
-    };
 
-    // 卡密
-    const rightCardPwd = "astracraftnb666";
-    window.checkCardPwd = function(){
-        let val=document.getElementById('cardPwd').value.trim();
-        let resBox=document.getElementById('unlockRes');
-        if(val===rightCardPwd){
-            let amount=prompt('✅ 卡密正确！输入晶核数量（正加负减）');
-            if(amount!==null && !isNaN(parseInt(amount))){
-                let newBal=modifyCrystal(parseInt(amount));
-                resBox.className='unlock-result success-text'; resBox.innerHTML=`🎉 修改成功！当前晶核: ${newBal}`; resBox.style.display='block';
-                setTimeout(()=>resBox.style.display='none',2500);
-            } else if(amount!==null) alert('请输入数字');
-        } else {
-            resBox.className='unlock-result error-text'; resBox.innerHTML='❌ 卡密错误'; resBox.style.display='block';
-        }
-    };
-
-    // AI
-    function openAI(){ document.getElementById('aiMask').classList.add('show'); }
-    function closeAI(){ document.getElementById('aiMask').classList.remove('show'); }
-    function getAIReply(txt){
-        let kw=txt.toLowerCase();
-        if(kw.includes('机甲')) return '社区支持分享机甲蓝图，欢迎交流设计~';
-        if(kw.includes('组队')) return '加抖音群664859491263，组队开黑超活跃！';
-        if(kw.includes('存档码')) return '导出/导入功能支持安全存档码，跨设备同步晶核。';
-        if(kw.includes('晶核')) return '晶核签到获取，也可用存档码转移。';
-        return '我是社区AI助手，可解答机甲、组队、存档码等问题。';
-    }
-    function sendAIMsg(){
-        let input=document.getElementById('aiInput'), history=document.getElementById('chatHistory');
-        let text=input.value.trim();
-        if(!text) return;
-        history.innerHTML+=`<div class="msg-user"><span>${escapeHtml(text)}</span></div>`;
-        input.value='';
-        setTimeout(()=>{
-            let rep=getAIReply(text);
-            history.innerHTML+=`<div class="msg-ai"><span>${escapeHtml(rep)}</span></div>`;
-            history.scrollTop=history.scrollHeight;
-        },200);
-        history.scrollTop=history.scrollHeight;
-    }
-    function escapeHtml(str){ return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
-</script>
+        // 控制台彩蛋（低调）
+        console.log("%c✦ 测试版占位页 | 纯白秩序 ✦", "color: #1c6fb0; font-size: 11px;");
+    </script>
 </body>
 </html>
